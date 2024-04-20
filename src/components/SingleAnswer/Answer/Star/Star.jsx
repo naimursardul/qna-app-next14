@@ -1,0 +1,40 @@
+"use client";
+
+import { updateAns } from "@/lib/data";
+import { useState } from "react";
+import { CiStar } from "react-icons/ci";
+import { FaStar } from "react-icons/fa";
+
+export default function Star({ ans }) {
+  const [star, setStar] = useState(false);
+  const [val, setVal] = useState(ans?.star);
+
+  const handleStar = async () => {
+    setStar(!star);
+
+    let newVal;
+    if (!star) {
+      newVal = val + 1;
+    }
+    if (star) {
+      newVal = val - 1;
+    }
+    setVal(newVal);
+    const data = { star: newVal, ansId: ans?._id };
+    await updateAns(data);
+  };
+
+  return (
+    <form
+      action={handleStar}
+      className="flex items-center cursor-pointer bg-gray-100 rounded-lg h-[40px] px-4"
+    >
+      <button className="flex items-center gap-1">
+        <span>{val}</span>
+        <span className="hoverAnimate font-bold text-lg">
+          {star ? <FaStar className="text-blue-600" /> : <CiStar />}
+        </span>
+      </button>
+    </form>
+  );
+}
