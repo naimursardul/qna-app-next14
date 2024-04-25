@@ -28,7 +28,7 @@ export default function LoginForm() {
             Log in{" "}
           </button>
           <small className="mx-auto">
-            Don't have any account?{" "}
+            {`Don't have any account?`}
             <Link
               className="ml-1 text-blue-600 font-bold hover:text-blue-500 hover:border-b hover:border-blue-500"
               href={`/signup`}
