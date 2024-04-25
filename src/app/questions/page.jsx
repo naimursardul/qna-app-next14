@@ -1,7 +1,7 @@
 import QnaBox from "@/components/QnaBox/QnaBox";
 import SearchFilter from "@/components/SearchFilter/SearchFilter";
 import { getAllQuestions } from "@/lib/data";
-import Link from "next/link";
+// import Link from "next/link";
 
 export default async function AllQuestions({ searchParams }) {
   console.log(searchParams);
@@ -20,10 +20,11 @@ export default async function AllQuestions({ searchParams }) {
       {/* QusBox */}
       <div className="mt-10 flex flex-wrap gap-10 justify-center">
         {questions?.map((ques) => (
-          <Link href={`/questions/${ques?.id}`} key={ques?.id}>
-            {" "}
-            <QnaBox ques={ques} />{" "}
-          </Link>
+          // <Link href={`/questions/${ques?.id}`} key={ques?._id}>
+          //   {" "}
+          <QnaBox key={ques?._id} ques={ques} />
+          //   {" "}
+          // </Link>
         ))}
       </div>
     </div>
