@@ -3,7 +3,10 @@ import Link from "next/link";
 
 export default function QnaBox({ ques }) {
   return (
-    <Link href={`/questions/${ques?.id}`} className="w-[300px] shadow-lg hoverAnimate flex flex-col rounded-lg">
+    <Link
+      href={`/questions/${ques?.id}`}
+      className="w-[300px] shadow-lg hoverAnimate flex flex-col rounded-lg"
+    >
       <div className="relative h-[200px]">
         <Image
           src={`/qn1.png`}
@@ -19,6 +22,6 @@ export default function QnaBox({ ques }) {
         </div>
         <p>{ques?.ques}</p>
       </div>
-    </Lin>
+    </Link>
   );
 }
