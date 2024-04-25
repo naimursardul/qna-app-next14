@@ -7,16 +7,18 @@ import { useState } from "react";
 import Image from "next/image";
 import Comments from "@/components/Comments/Comments";
 import { FaRegCommentAlt } from "react-icons/fa";
-import BtnOnClick from "@/components/BtnOnClick/BtnOnClick";
+import { updateAns } from "@/lib/data";
 
 export default function Answer({ props }) {
   const { ans, cmnts } = props;
   const [isEdit, setIsEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleEdit = () => {
+  const handleEdit = async (formData) => {
     setIsEdit(!isEdit);
     console.log("clicked");
+
+    await updateAns(formData);
   };
   return (
     <div className="flex flex-col ">
@@ -24,7 +26,7 @@ export default function Answer({ props }) {
         <>
           <form action={handleEdit} className="flex flex-col gap-5 px-4 mb-4">
             <input type="hidden" name="ansId" value={ans?._id} />
-            <input type="file" name="imgFile" />
+            <input type="file" name="img" />
             <textarea
               name="newAns"
               rows="10"
@@ -38,16 +40,10 @@ export default function Answer({ props }) {
               >
                 Update
               </button>
-              {/* <BtnOnClick
-                props={{ name: "Cancel", fn: setIsEdit, val: isEdit }}
-              /> */}
             </div>
           </form>
           <form action={() => setIsEdit(!isEdit)} className="px-4">
-            <button
-              className="btn bg-gray-100 text-black rounded"
-              // onClick={() => setIsEdit(!isEdit)}
-            >
+            <button className="btn bg-gray-100 text-black rounded">
               Cancel
             </button>
           </form>
@@ -71,36 +67,27 @@ export default function Answer({ props }) {
       )}
 
       {/* INTERACTIONS */}
-      <div className="ml-5 mt-8 mb-4 flex items-center justify-start gap-3 ">
+      <div className="mx-5 mt-8 mb-4 flex items-center justify-start gap-5  px-4 py-2 border-t border-b ">
         {/* STAR */}
         <Star ans={ans} />
 
         {/* COMMENTS BTN*/}
-        <form
-          action={() => setIsOpen(!isOpen)}
-          className=" font-bold cursor-pointer bg-gray-100 rounded-lg h-[40px] px-4 flex items-center"
-        >
+        <form className="flex items-center" action={() => setIsOpen(!isOpen)}>
           <button className="hoverAnimate">
             <FaRegCommentAlt />
           </button>
         </form>
 
         {/* EDIT BTN*/}
-        <form
-          action={() => setIsEdit(!isEdit)}
-          className=" font-bold cursor-pointer bg-gray-100 rounded-lg h-[40px] px-4 flex items-center"
-        >
+        <form className="flex items-center" action={() => setIsEdit(!isEdit)}>
           <button className="hoverAnimate  text-xl">
             <CiEdit />
           </button>
         </form>
 
         {/* DELETE BTN*/}
-        <form
-          action={`#`}
-          className=" font-bold cursor-pointer bg-gray-100 rounded-lg h-[40px] px-4 flex items-center"
-        >
-          <button className="hoverAnimate">
+        <form className="flex items-center" action={`#`}>
+          <button className="hoverAnimate text-lg">
             <AiOutlineDelete />
           </button>
         </form>

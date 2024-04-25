@@ -106,7 +106,7 @@ export const getAllAnswers = async (params) => {
     await connectDB();
 
     const res = await Answer.find({ qId }).sort({ star: -1 });
-    console.log(res);
+    // console.log(res);
 
     return res;
   } catch (error) {
@@ -114,14 +114,14 @@ export const getAllAnswers = async (params) => {
   }
 };
 
-// UPDATE STAR & UPDATE ANSWER
-export const updateAns = async (data) => {
-  const { ansId, star, img, qId } = data;
+// UPDATE STAR
+export const updateStar = async (data) => {
+  const { ansId, star } = data;
   console.log(data);
   try {
     await connectDB();
 
-    if (!(star || img || ans)) return { error: "Nothing to update" };
+    if (!star) return { error: "Nothing to update" };
 
     const ans = await Answer.findById(ansId);
     console.log(ans);
@@ -210,7 +210,7 @@ export const updateComment = async ([cmnt, newCmnt]) => {
   }
 };
 
-// UPDATE COMMENT
+// DELTE COMMENT
 export const deleteComment = async (cmnt) => {
   const { _id, ansId } = cmnt;
   try {
@@ -233,5 +233,35 @@ export const deleteComment = async (cmnt) => {
   } catch (error) {
     console.log(error);
     return false;
+  }
+};
+
+// UPDATE ANSWER
+export const updateAns = async (formData) => {
+  const { ansId, newAns, img } = Object.fromEntries(formData);
+
+  console.log(ansId, newAns, img);
+
+  if (!newAns) return false;
+
+  const ansObj = { ans: newAns };
+
+  try {
+    await connectDB();
+
+    const answer = await Answer.findById(ansId);
+
+    if (!answer) return false;
+
+    const newAnswer = await Answer.findByIdAndUpdate(ansId, ansObj, {
+      new: true,
+    });
+
+    console.log(newAnswer);
+
+    revalidatePath(`/questions/${answer._doc.qId}`);
+    return true;
+  } catch (error) {
+    console.log(error);
   }
 };
