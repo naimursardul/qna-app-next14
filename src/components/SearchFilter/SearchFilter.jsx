@@ -26,16 +26,17 @@ export default async function SearchFilter() {
       action={getData}
       className=" flex max-md:flex-col flex-row gap-5 max-sm:gap-5 justify-center items-center"
     >
-      <div className="max-sm:w-[100%] w-[400px]">
-        <input
-          type="search"
-          name="search"
-          placeholder="Search your question..."
-          className="w-full bg-gray-100 border-none outline-none rounded py-[10px] px-3 max-sm:text-sm"
-        />
-      </div>
+      <input
+        type="search"
+        name="search"
+        placeholder="Search your question..."
+        className="max-sm:w-[100%] w-[400px] bg-[--bgSofter] max-sm:text-sm text-[--text] border-none outline-none rounded py-[10px] px-3 "
+      />
       <div className="flex gap-5 max-sm:gap-2 text-sm max-sm:text-[11px]">
-        <select name="sub" className="bg-gray-100 px-1 rounded-md outline-none">
+        <select
+          name="sub"
+          className="bg-[--bgSofter] text-[--text] px-1 rounded-md outline-none"
+        >
           <option value={``}>All Subjects</option>
           {subs?.map((sub, i) => (
             <option key={i} value={sub}>
@@ -46,7 +47,7 @@ export default async function SearchFilter() {
         <select
           name="chap"
           id=""
-          className="bg-gray-100 px-1 rounded-md outline-none"
+          className="bg-[--bgSofter] text-[--text] px-1 rounded-md outline-none"
         >
           <option value={``}>All Chapters</option>
           {chaps?.map((chap, i) => (
@@ -56,7 +57,7 @@ export default async function SearchFilter() {
           ))}
         </select>
         <div className="w-full">
-          <button className="btn bg-blue-600 text-white rounded ">
+          <button className="btn bg-[--btn]  text-[--bg] hover:text-[--bgSoft] rounded ">
             Search
           </button>
         </div>

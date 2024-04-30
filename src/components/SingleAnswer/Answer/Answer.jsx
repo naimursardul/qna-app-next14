@@ -21,29 +21,36 @@ export default function Answer({ props }) {
     await updateAns(formData);
   };
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col bg-[--bgSoft] rounded-xl">
       {isEdit ? (
         <>
-          <form action={handleEdit} className="flex flex-col gap-5 px-4 mb-4">
+          <form
+            action={handleEdit}
+            className="flex flex-col gap-5 px-4 pt-5 mb-4  "
+          >
             <input type="hidden" name="ansId" value={ans?._id} />
-            <input type="file" name="img" />
+            <input
+              type="file"
+              name="img"
+              className="text-[--textSoft] bg-[--bgSofter] "
+            />
             <textarea
               name="newAns"
               rows="10"
               defaultValue={ans?.ans}
-              className="px-4 py-2 border outline-none rounded"
+              className="px-4 py-2 border outline-none border-none rounded bg-[--bgSofter] text-[--text]"
             ></textarea>
             <div className=" flex gap-2">
               <button
                 type="submit"
-                className=" btn bg-blue-600 text-white rounded"
+                className=" btn bg-[--btn] text-[--text] rounded"
               >
                 Update
               </button>
             </div>
           </form>
           <form action={() => setIsEdit(!isEdit)} className="px-4">
-            <button className="btn bg-gray-100 text-black rounded">
+            <button className="btn bg-[--textSoft] text-[--text] rounded">
               Cancel
             </button>
           </form>
@@ -60,14 +67,12 @@ export default function Answer({ props }) {
             </div>
           </div>
           {/* ANSWER TEXT */}
-          <div className="flex flex-col gap-4 px-5 py-3 ">
-            <p>{ans?.ans}</p>
-          </div>{" "}
+          <p className="px-5 py-3 text-[--text]">{ans?.ans}</p>
         </div>
       )}
 
       {/* INTERACTIONS */}
-      <div className="mx-5 mt-8 mb-4 flex items-center justify-start gap-5  px-4 py-2 border-t border-b ">
+      <div className="px-5 py-2 mt-8 flex items-center justify-start gap-5 bg-[--bgSofter]  text-[--textSoft] ">
         {/* STAR */}
         <Star ans={ans} />
 
@@ -95,7 +100,7 @@ export default function Answer({ props }) {
 
       {/* COMMENTS */}
       {isOpen && (
-        <div className="px-5  mb-8">
+        <div className="px-5 bg-[--bgSofter] pb-8">
           <Comments props={{ ans, cmnts }} />
         </div>
       )}

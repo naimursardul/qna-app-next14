@@ -11,8 +11,7 @@ export default function Comments({ props }) {
         <AllComments cmnts={cmnts} />
 
         {/* CREATE COMMENT */}
-        <div className="mx-4 flex flex-col gap-1">
-          <h3 className="text-xl max-md:text-lg">Add your comment here:</h3>
+        <div className="mx-4">
           <CreateComment ans={ans} />
         </div>
       </div>

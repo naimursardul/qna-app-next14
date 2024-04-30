@@ -38,17 +38,19 @@ export default function SingleComment({ cmnt }) {
         <Image src={`/aboutme.jpg`} alt="" fill className="rounded-full " />
       </div>
 
-      <div className="flex flex-col items-start ">
+      <div className="flex flex-col items-start gap-1">
         {/* COMMENT TEXT */}
-        <div className="flex flex-col bg-gray-100 rounded-2xl px-4 py-3 text-sm">
-          <div className="text-[12px]  font-semibold">Naimur Rahman</div>
+        <div className="flex flex-col bg-[--bgSoftest] text-[--text] rounded-2xl px-4 py-3 text-sm">
+          <p className="text-[12px] text-[--text] font-semibold ">
+            Naimur Rahman
+          </p>
           {isEdit ? (
             <textarea
               type="text"
               name="newCmnt"
               value={newCmnt}
               onChange={(e) => setNewCmnt(e.target.value)}
-              className="w-full px-2 py-1"
+              className="w-full bg-[--bgSoft] outline-none rounded-md px-2 py-1"
             />
           ) : (
             <p className="">{isUpdate ? newCmnt : cmnt?.cmnt}</p>
@@ -56,7 +58,10 @@ export default function SingleComment({ cmnt }) {
         </div>
 
         {/* COMMENT ACTION */}
-        <div className="flex gap-4 text-[13px] ml-3">
+        <div className="flex gap-4 font-[500] text-[--textSoft] ml-3">
+          <p className="font-[200]">
+            {(new Date() - cmnt?.createdAt) / (3600 * 1000)}
+          </p>
           <div>
             {isEdit ? (
               <div className="flex gap-4">
@@ -77,23 +82,23 @@ export default function SingleComment({ cmnt }) {
       {isPopUp && (
         <div>
           <div className="fixed top-0 left-0  h-screen w-screen z-20 opacity-50 bg-black "></div>
-          <div className="z-30 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[400px] rounded-md max-sm:w-[280px] flex flex-col gap-3 bg-white px-5 py-4  ">
-            <h3 className="text-xl font-semibold ">Delete</h3>
-            <p className="text-sm text-gray-500">
+          <div className="z-30 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[400px] rounded-md max-sm:w-[280px] flex flex-col gap-3 bg-[--bgSofter] px-5 py-4  ">
+            <h3 className="text-xl text-[--text] font-semibold ">Delete</h3>
+            <p className="text-sm text-[--text]">
               Are you sure want to delete this comment?
             </p>
             <div className="flex gap-3">
               <button
-                className="btn rounded bg-blue-600 text-white"
-                onClick={handleDeleteComment}
-              >
-                Yes
-              </button>
-              <button
-                className="btn rounded bg-gray-200 text-black"
+                className="btn font-semibold rounded bg-[--bgSoftest] text-[--text]"
                 onClick={() => setIsPopUp(!isPopUp)}
               >
                 No
+              </button>
+              <button
+                className="btn font-semibold rounded bg-[--btn] text-[--text]"
+                onClick={handleDeleteComment}
+              >
+                Yes
               </button>
             </div>
           </div>

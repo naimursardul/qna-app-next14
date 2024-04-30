@@ -8,8 +8,8 @@ export default function NavLink({ link }) {
   return (
     <Link
       href={link?.path}
-      className={` font-[500] flex justify-center hover:text-blue-500 ${
-        pathName === link?.path ? "border-b border-blue-600 text-blue-600" : ""
+      className={`font-[500] text-sm flex justify-center text-[--text] hover:text-[--textSoft] hover:bg-[--navBgSoft] px-3 py-2 rounded-full  ${
+        pathName === link?.path ? "bg-[--navBgSoft] px-3 py-2 rounded-full" : ""
       }`}
     >
       {link?.name}

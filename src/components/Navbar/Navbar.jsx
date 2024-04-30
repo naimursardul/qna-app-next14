@@ -13,15 +13,15 @@ export default function Navbar() {
 
   return (
     <div className="px-[50px] flex justify-between items-center h-[75px] shadow-md ">
-      <h2 className="text-2xl text-blue-500">BRAND NAME</h2>
+      <h2 className="text-2xl text-[--text]">BRAND NAME</h2>
       <div className="flex gap-12 max-lg:hidden">
-        <div className="flex gap-5 ">
+        <div className="flex gap-2 ">
           {links?.map((link, index) => (
             <NavLink link={link} key={index} />
           ))}
         </div>
         {!session && (
-          <div className="flex gap-5">
+          <div className="flex gap-2">
             <NavLink link={{ name: "Sign up", path: "/signup" }} />
             <NavLink link={{ name: "Log in", path: "/login" }} />
           </div>

@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg: #121212;
+  --bgSoft: #282828;
+  --bgSofter: #3f3f3f;
+  --bgSoftest: #575757;
+  --navBgSoft: #1f1d33;
+  --text: white;
+  --textSoft: #8b8b8b;
+  --btn: #3b82f6;
+  --btnSoft: #a688fa;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -17,11 +29,11 @@
 }
 
 .inputField {
-  @apply text-sm px-3 py-3 border-none outline-none bg-gray-100 rounded w-full;
+  @apply text-[--text] text-sm px-3 py-3 border-none outline-none bg-[--input] rounded w-full;
 }
 
 .btn {
-  @apply w-full flex gap-2 justify-center items-center py-3 px-3  border-none outline-none text-sm hover:text-gray-300;
+  @apply w-full flex gap-2 justify-center items-center py-3 px-3  border-none outline-none text-sm hover:text-[textSoft];
 }
 
 .hoverAnimate {

@@ -1,27 +1,31 @@
 import Image from "next/image";
-import Link from "next/link";
 
 export default function QnaBox({ ques }) {
   return (
-    <Link
+    <div
       href={`/questions/${ques?.id}`}
-      className="w-[300px] shadow-lg hoverAnimate flex flex-col rounded-lg"
+      className="w-[300px]  flex flex-col bg-[--bgSoft] rounded-lg hoverAnimate p-3"
     >
-      <div className="relative h-[200px]">
+      <div className="relative h-[200px] ">
         <Image
           src={`/qn1.png`}
           alt=""
           fill
-          className="object-cover rounded-t-lg"
+          className="object-cover rounded-lg"
         />
       </div>
-      <div className="flex flex-col gap-4 px-5 py-3">
-        <div className="text-sm flex gap-10 justify-between font-semibold text-gray-400 ">
+      <div className="flex flex-col gap-4 px-1 py-3">
+        <div className="flex gap-2 justify-between font-bold text-[--text] text-sm">
           <p>{ques?.sub}</p>
-          <p>{ques?.chap}</p>
+          <p>{`Chapter: ` + ques?.chap}</p>
         </div>
-        <p>{ques?.ques}</p>
+        <p className="text-[--textSoft]">
+          {(ques?.ques).slice(0, 105)}{" "}
+          <span className="font-bold hover:text-[--btnSoft] ">
+            Read more...
+          </span>
+        </p>
       </div>
-    </Link>
+    </div>
   );
 }

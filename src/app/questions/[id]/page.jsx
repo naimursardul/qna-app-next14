@@ -26,10 +26,16 @@ export default async function page({ params }) {
     <div className="w-[70%] max-md:w-[75%] max-sm:w-[85%] mx-auto my-16 flex flex-col gap-16">
       {/* Links */}
       <div className="flex justify-center gap-2 w-full">
-        <Link className="btn bg-blue-600 text-white " href={`#allAns`}>
+        <Link
+          className="btn bg-[--bgSoft] text-[--text] hover:text-[--textSoft] rounded-lg   "
+          href={`#allAns`}
+        >
           All Answers
         </Link>
-        <Link className="btn bg-blue-600 text-white" href={`#subAns`}>
+        <Link
+          className="btn bg-[--bgSoft] text-[--text] hover:text-[--textSoft] rounded-lg "
+          href={`#subAns`}
+        >
           Submit Answer
         </Link>
       </div>
