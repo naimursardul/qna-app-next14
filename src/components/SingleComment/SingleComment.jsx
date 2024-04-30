@@ -31,6 +31,46 @@ export default function SingleComment({ cmnt }) {
     document.body.classList.remove("blurBg");
   }
 
+  // COMMENT TIMESTAMP
+  const cmntTimeAgo = () => {
+    let timeAgo = Math.floor((new Date() - cmnt?.createdAt) / 1000);
+
+    // 1 min to 60 mins
+    timeAgo = Math.floor((new Date() - cmnt?.createdAt) / (1000 * 60));
+    if (timeAgo >= 1 && timeAgo <= 60) {
+      return { time: timeAgo === 1 ? "min" : "mins", timeAgo };
+    }
+    // 1 hr to 24 hrs
+    timeAgo = Math.floor((new Date() - cmnt?.createdAt) / (1000 * 60 * 60));
+    if (timeAgo >= 1 && timeAgo <= 24) {
+      return { time: timeAgo === 1 ? "hr" : "hrs", timeAgo };
+    }
+    // 1 day to 30 days
+    timeAgo = Math.floor(
+      (new Date() - cmnt?.createdAt) / (1000 * 60 * 60 * 24)
+    );
+    if (timeAgo >= 1 && timeAgo <= 30) {
+      return { time: timeAgo === 1 ? "day" : "days", timeAgo };
+    }
+    // 1 month to 12 months
+    timeAgo = Math.floor(
+      (new Date() - cmnt?.createdAt) / (1000 * 60 * 60 * 24 * 30)
+    );
+    if (timeAgo >= 1 && timeAgo <= 12) {
+      return { time: timeAgo === 1 ? "month" : "months", timeAgo };
+    }
+    // 1 year ++
+    timeAgo = Math.floor(
+      (new Date() - cmnt?.createdAt) / (1000 * 60 * 60 * 24 * 30 * 12)
+    );
+    if (timeAgo >= 1) {
+      return { time: timeAgo === 1 ? "yr" : "yrs", timeAgo };
+    }
+
+    // 1sec to 60 sec
+    return { time: "Just now", timeAgo: "" };
+  };
+
   return (
     <div className="flex gap-3 ">
       {/* PROFLE IMG */}
@@ -60,7 +100,7 @@ export default function SingleComment({ cmnt }) {
         {/* COMMENT ACTION */}
         <div className="flex gap-4 font-[500] text-[--textSoft] ml-3">
           <p className="font-[200]">
-            {(new Date() - cmnt?.createdAt) / (3600 * 1000)}
+            {cmntTimeAgo()?.timeAgo + " " + cmntTimeAgo()?.time}
           </p>
           <div>
             {isEdit ? (
