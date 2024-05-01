@@ -32,13 +32,13 @@ export default function Answer({ props }) {
             <input
               type="file"
               name="img"
-              className="text-[--textSoft] bg-[--bgSofter] "
+              className="text-[--textSoft] bg-[--bgSoftest] "
             />
             <textarea
               name="newAns"
               rows="10"
               defaultValue={ans?.ans}
-              className="px-4 py-2 border outline-none border-none rounded bg-[--bgSofter] text-[--text]"
+              className="px-4 py-2 border outline-none border-none rounded bg-[--bgSoftest] text-[--text]"
             ></textarea>
             <div className=" flex gap-2">
               <button
@@ -50,7 +50,7 @@ export default function Answer({ props }) {
             </div>
           </form>
           <form action={() => setIsEdit(!isEdit)} className="px-4">
-            <button className="btn bg-[--textSoft] text-[--text] rounded">
+            <button className="btn bg-[--bgSofter] text-[--text] rounded">
               Cancel
             </button>
           </form>

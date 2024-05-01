@@ -57,7 +57,7 @@ export default async function SearchFilter() {
           ))}
         </select>
         <div className="w-full">
-          <button className="btn bg-[--btn]  text-[--bg] hover:text-[--bgSoft] rounded ">
+          <button className="btn bg-[--btn]  text-[--text] hover:bg-[--btnSoft] rounded ">
             Search
           </button>
         </div>

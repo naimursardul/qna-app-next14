@@ -11,11 +11,14 @@ export default function MobileLinks({ props }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
-      <div onClick={() => setIsOpen(!isOpen)}>
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="relative text-[--text] z-[60] "
+      >
         {isOpen ? <RxCross1 /> : <FaBarsStaggered />}
       </div>
       {isOpen && (
-        <div className="scale-up-tr z-50 absolute right-0 top-[75px] h-[calc(100vh-75px)] w-1/2 flex flex-col items-center justify-center gap-8 bg-gray-100 ">
+        <div className="slide-left z-50 absolute right-0 left-0 top-0 h-screen w-full flex flex-col items-center justify-center gap-8 bg-[--bgSoft]">
           <div
             className="flex flex-col gap-3"
             onClick={() => setIsOpen(!isOpen)}

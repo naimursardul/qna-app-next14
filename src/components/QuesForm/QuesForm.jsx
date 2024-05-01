@@ -10,13 +10,25 @@ export default function QuesForm() {
   const [state, formAction] = useFormState(createQuestion, undefined);
 
   return (
-    <form action={formAction} className="flex flex-col gap-5 ">
+    <form
+      action={formAction}
+      // className="flex flex-col gap-5  p-8 max-sm:px-5 rounded-lg border-none outline-none shadowColor"
+      className="flex flex-col gap-5 bg-[--bgSoft] p-8 max-sm:px-5 rounded-lg border-none outline-none "
+    >
+      <h1 className="text-3xl text-[--btnSoft] mb-5">Ask your question</h1>
       <div className="flex gap-3 justify-start">
+        {/*
+         *
+         *
+         */}
         {/* SUB */}
-        <label htmlFor="sub" className="font-semibold">
+        <label htmlFor="sub" className="font-semibold text-[--textSoft]">
           Subject:
         </label>
-        <select name="sub">
+        <select
+          name="sub"
+          className="bg-[--bgSofter] text-[--text] px-2 py-1 rounded-md outline-none"
+        >
           <option value={false}>Select</option>
           {subs?.map((sub, index) => (
             <option key={index} value={sub}>
@@ -25,12 +37,19 @@ export default function QuesForm() {
           ))}
         </select>
       </div>
+      {/*
+       *
+       *
+       */}
       {/* CHAP */}
       <div className="flex gap-3 justify-start">
-        <label htmlFor="chap" className="font-semibold">
+        <label htmlFor="chap" className="font-semibold text-[--textSoft]">
           Chapter:
         </label>
-        <select name="chap">
+        <select
+          name="chap"
+          className="bg-[--bgSofter] text-[--text] px-2 py-1 rounded-md outline-none"
+        >
           <option value={false}>Select</option>
           {chaps?.map((chap, index) => (
             <option key={index} value={chap}>
@@ -39,29 +58,53 @@ export default function QuesForm() {
           ))}
         </select>
       </div>
+      {/*
+       *
+       *
+       */}
       {/* IMG */}
       <div className="flex gap-3 justify-start items-center">
-        <label htmlFor="sub" className="font-semibold">
+        <label htmlFor="sub" className="font-semibold text-[--textSoft]">
           Image:
         </label>
-        <input type="file" name="img" className="text-sm" />
+        <input
+          type="file"
+          name="img"
+          className=" text-sm text-[--textSoft] bg-[--bgSofter] "
+        />
       </div>
+      {/*
+       *
+       *
+       */}
       {/* TEXT */}
       <div className="flex flex-col gap-2 justify-start">
         <label htmlFor="sub" className="flex flex-col">
-          <span className="font-semibold">Your question:</span>
-          <small>{"(Write at least the topic of your question)*"}</small>
+          <span className="font-semibold text-[--textSoft]">
+            Your question:
+          </span>
+          <small className="text-[--text]">
+            {"(Write at least the topic of your question)*"}
+          </small>
         </label>
         <textarea
           type="text"
           name="ques"
-          placeholder="Question"
+          placeholder="Type here..."
           rows={10}
-          className="border rounded-lg outline-none py-3 px-4"
+          className="border bg-[--bgSofter] rounded-lg border-none outline-none py-3 px-4 text-[--text]"
         />
       </div>
+      {/*
+       *
+       *
+       */}
       {/* User ID */}
       <input type="hidden" name="userId" value={"1324453408"} />
+      {/*
+       *
+       *
+       */}
       {/* Message */}
       {state?.err && (
         <div className="flex gap-1 text-red-800 items-center">
@@ -75,7 +118,9 @@ export default function QuesForm() {
           <small>{state.success}</small>
         </div>
       )}
-      <button className="btn bg-blue-600 rounded-lg text-white">Submit</button>
+      <button className="btn bg-[--btn] hover:bg-[--btnSoft] rounded-lg text-[--text]">
+        Submit
+      </button>
     </form>
   );
 }

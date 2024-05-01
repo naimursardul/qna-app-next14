@@ -14,17 +14,19 @@ export default function SubmitSolve({ params }) {
   const userId = "85y23458484237";
   return (
     <div className="flex flex-col gap-8">
-      <h2 className="font-semibold text-3xl text-blue-500">Submit Answer:</h2>
+      <h2 className="font-semibold text-3xl text-[--btnSoft]">
+        Submit Answer:
+      </h2>
       <form action={formAction} className="flex flex-col gap-4">
         {/* IMAGE */}
-        <input type="file" />
+        <input type="file" className="bg-[--bgSoftest] text-[--textSoft]" />
 
         {/* ANSWER-TEXT */}
         <textarea
           placeholder="Type answer..."
           name="ans"
           rows={10}
-          className="w-full border outline-none rounded-md p-4"
+          className="w-full border-none outline-none bg-[--bgSoftest]  rounded-md p-4  text-[--text] "
         />
 
         {/* RESPONDENT */}
@@ -48,7 +50,7 @@ export default function SubmitSolve({ params }) {
         )}
 
         {/* BUTTON */}
-        <button className="btn rounded-md bg-blue-600 text-white flex items-center">
+        <button className="btn rounded-md bg-[--btn] hover:bg-[--btnSoft] text-[--text] flex items-center">
           <span>Submit</span>
           <IoIosSend />
         </button>

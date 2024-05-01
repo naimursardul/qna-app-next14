@@ -1,4 +1,3 @@
-import { getAllComments } from "@/lib/data";
 import SingleComment from "../SingleComment/SingleComment";
 
 export default async function AllComments({ cmnts }) {
