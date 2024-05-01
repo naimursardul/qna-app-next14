@@ -1,4 +1,3 @@
-import { getAllQuestions } from "@/lib/data";
 import { chaps, subs } from "@/lib/utilities";
 import { redirect } from "next/navigation";
 
