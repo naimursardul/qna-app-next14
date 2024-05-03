@@ -5,9 +5,13 @@ import { useFormState } from "react-dom";
 import { RxCrossCircled } from "react-icons/rx";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { chaps, subs } from "@/lib/utilities";
+import UploadImg from "../UploadImg/UploadImg";
+import { useState } from "react";
 
 export default function QuesForm() {
   const [state, formAction] = useFormState(createQuestion, undefined);
+  const [imgs, setImgs] = useState(null);
+  console.log(imgs);
 
   return (
     <form
@@ -63,16 +67,7 @@ export default function QuesForm() {
        *
        */}
       {/* IMG */}
-      <div className="flex gap-3 justify-start items-center">
-        <label htmlFor="sub" className="font-semibold text-[--textSoft]">
-          Image:
-        </label>
-        <input
-          type="file"
-          name="img"
-          className=" text-sm text-[--textSoft] bg-[--bgSofter] "
-        />
-      </div>
+      <UploadImg setImgs={setImgs} />
       {/*
        *
        *

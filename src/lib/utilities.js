@@ -26,6 +26,14 @@ export const hash = (str) => {
   return hash;
 };
 
+export const generateFileName = (name) => {
+  const extension = name.split(".").pop();
+
+  const fileName = name.replace(`.${extension}`, `-${Date.now()}.${extension}`);
+
+  return fileName;
+};
+
 export const subs = [
   "Physics 1st",
   "Physics 2nd",
