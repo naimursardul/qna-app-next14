@@ -40,8 +40,8 @@ export default function UploadImg({ props }) {
   const handleImgUpload = async () => {
     const imgUrls = [];
     if (files && files[0]) {
-      files.map((file, index) => {
-        const key = index;
+      for(let index=0; index<files?.length;index++) {
+        const file = files[index];
         const fileName = generateFileName(file.name);
         const storage = getStorage(app);
         const metadata = {
