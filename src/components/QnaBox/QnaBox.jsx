@@ -6,14 +6,12 @@ export default function QnaBox({ ques }) {
       href={`/questions/${ques?.id}`}
       className="w-[300px]  flex flex-col bg-[--bgSoft] rounded-lg hoverAnimate p-3"
     >
-      <div className="relative h-[200px] ">
-        <Image
-          src={`/qn1.png`}
-          alt=""
-          fill
-          className="object-cover rounded-lg"
-        />
-      </div>
+      {ques?.imgs[0] &&
+        ques.imgs.map((img) => (
+          <div className="relative h-[200px] ">
+            <Image src={img} alt="" fill className="object-cover rounded-lg" />
+          </div>
+        ))}
       <div className="flex flex-col gap-4 px-1 py-3">
         <div className="flex gap-2 justify-between font-bold text-[--text] text-sm">
           <p>{ques?.sub}</p>

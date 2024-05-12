@@ -25,12 +25,6 @@ export default function SingleComment({ cmnt }) {
     await deleteComment(cmnt);
   };
 
-  if (isPopUp) {
-    document.body.classList.add("blurBg");
-  } else {
-    document.body.classList.remove("blurBg");
-  }
-
   // COMMENT TIMESTAMP
   const cmntTimeAgo = () => {
     let timeAgo = Math.floor((new Date() - cmnt?.createdAt) / 1000);

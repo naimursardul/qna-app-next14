@@ -12,9 +12,12 @@
   --textSoft: #8b8b8b;
   --btn: #3b82f6;
   --btnSoft: #a688fa;
+
+  --toastify-font-family: monospace;
 }
 
 * {
+  /* font-family: monospace; */
   margin: 0;
   padding: 0;
   box-sizing: border-box;

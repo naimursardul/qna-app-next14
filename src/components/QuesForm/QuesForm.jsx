@@ -6,12 +6,18 @@ import { RxCrossCircled } from "react-icons/rx";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { chaps, subs } from "@/lib/utilities";
 import UploadImg from "../UploadImg/UploadImg";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export default function QuesForm() {
   const [state, formAction] = useFormState(createQuestion, undefined);
   const [imgs, setImgs] = useState(null);
   console.log(imgs);
+  const imgStr = imgs?.join(",");
+
+  if (state?.success && state?.data) {
+    redirect(`/questions/${state.data?._id}`);
+  }
 
   return (
     <form
@@ -67,7 +73,8 @@ export default function QuesForm() {
        *
        */}
       {/* IMG */}
-      <UploadImg setImgs={setImgs} />
+      <input type="hidden" name="imgs" value={imgStr} />
+      <UploadImg props={{ setImgs, imgs, isMultiple: false }} />
       {/*
        *
        *
@@ -107,12 +114,7 @@ export default function QuesForm() {
           <small>{state.err}</small>
         </div>
       )}
-      {state?.success && (
-        <div className="flex gap-1 text-green-900 items-center">
-          <IoCheckmarkDoneCircle />
-          <small>{state.success}</small>
-        </div>
-      )}
+
       <button className="btn bg-[--btn] hover:bg-[--btnSoft] rounded-lg text-[--text]">
         Submit
       </button>

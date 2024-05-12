@@ -5,27 +5,35 @@ import { Answer } from "./models/answer-model.js";
 import { Question } from "./models/question-model.js";
 import { chaps, connectDB, subs } from "./utilities.js";
 import { Comment } from "./models/comment-model.js";
+import { Bounce, toast } from "react-toastify";
 
 // CREATE QUESTION
 export const createQuestion = async (prev, formData) => {
-  const { ques, chap, sub, userId } = Object.fromEntries(formData);
+  const { ques, chap, imgs, sub, userId } = Object.fromEntries(formData);
+  console.log(imgs);
 
   try {
     await connectDB();
 
-    if (!(ques, chap, sub)) {
+    if (!(ques || chap || sub)) {
       return { err: "Please fill up the required fields" };
     }
 
-    const newQ = await new Question({
+    const qObj = {
       ques,
       chap,
       sub,
       userId,
-    });
+      imgs: imgs.split(",") || [],
+    };
+
+    console.log(qObj);
+
+    const newQ = await new Question(qObj);
 
     await newQ.save();
-    return { success: "Question submitted successfully!" };
+    console.log(newQ);
+    return { success: true, data: newQ?._doc };
   } catch (error) {
     console.log(error);
     return { err: "Error in Server-side. Try again!" };
@@ -71,9 +79,9 @@ export const getSingleQuestion = async ({ id }) => {
 };
 
 // SUBMIT ANSWER
-export const submitAnswer = async (prev, formData) => {
-  const { qid, userId, ans } = Object.fromEntries(formData);
-  console.log(qid, userId, ans);
+export const createAnswer = async (prev, formData) => {
+  const { qId, userId, ans, ansImgs } = Object.fromEntries(formData);
+  console.log(ansImgs.split(","));
 
   try {
     await connectDB();
@@ -82,16 +90,19 @@ export const submitAnswer = async (prev, formData) => {
       return { err: "Please fill up the required fields" };
     }
 
-    const res = await new Answer({
-      qid,
+    const ansObj = {
+      qId,
       userId,
       ans,
-    });
+      imgs: ansImgs.split(",") || [],
+    };
 
-    console.log(res);
+    const res = await new Answer(ansObj);
+
     await res.save();
+    console.log(res);
 
-    revalidatePath(`/questions/${qid}`);
+    revalidatePath(`/questions/${qId}`);
     return { success: "Question submitted successfully!" };
   } catch (error) {
     console.log(error);
@@ -137,6 +148,55 @@ export const updateStar = async (data) => {
     );
 
     console.log(newAns);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// UPDATE ANSWER
+export const updateAns = async (formData) => {
+  const { ansId, newAns, img } = Object.fromEntries(formData);
+
+  console.log(ansId, newAns, img);
+
+  if (!newAns) return false;
+
+  const ansObj = { ans: newAns };
+
+  try {
+    await connectDB();
+
+    const answer = await Answer.findById(ansId);
+
+    if (!answer) return false;
+
+    const newAnswer = await Answer.findByIdAndUpdate(ansId, ansObj, {
+      new: true,
+    });
+
+    console.log(newAnswer);
+
+    revalidatePath(`/questions/${answer._doc.qId}`);
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// DELETE ANSWER
+export const deleteAnswer = async (ansId) => {
+  console.log(ansId);
+  try {
+    await connectDB();
+
+    const answer = await Answer.findById(ansId);
+    const { qId } = answer?._doc;
+    if (!answer) return;
+
+    await Answer.findByIdAndDelete(ansId);
+
+    console.log(`/questions/${qId}`);
+    revalidatePath(`/questions/${qId}`);
   } catch (error) {
     console.log(error);
   }
@@ -233,35 +293,5 @@ export const deleteComment = async (cmnt) => {
   } catch (error) {
     console.log(error);
     return false;
-  }
-};
-
-// UPDATE ANSWER
-export const updateAns = async (formData) => {
-  const { ansId, newAns, img } = Object.fromEntries(formData);
-
-  console.log(ansId, newAns, img);
-
-  if (!newAns) return false;
-
-  const ansObj = { ans: newAns };
-
-  try {
-    await connectDB();
-
-    const answer = await Answer.findById(ansId);
-
-    if (!answer) return false;
-
-    const newAnswer = await Answer.findByIdAndUpdate(ansId, ansObj, {
-      new: true,
-    });
-
-    console.log(newAnswer);
-
-    revalidatePath(`/questions/${answer._doc.qId}`);
-    return true;
-  } catch (error) {
-    console.log(error);
   }
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { app } from "@/lib/firebase";
-import { generateFileName } from "@/lib/utilities";
+import { generateFileName, toastProps } from "@/lib/utilities";
 import Image from "next/image";
 import { MdCancel } from "react-icons/md";
 import {
@@ -11,34 +11,37 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function UploadImg({ setImgs }) {
+export default function UploadImg({ props }) {
+  const { setImgs, imgs, isMultiple } = props;
   const [files, setFiles] = useState(null);
-  const [fileUrls, setFileUrls] = useState(null);
-  const [progressPercent, setProgressPercent] = useState(undefined);
+  const [fileProp, setFileProp] = useState(null);
 
   //   ON CHANGE
   function onInputChange(e) {
-    setProgressPercent(undefined);
+    setFileProp(null);
+    setImgs(null);
 
-    let allFiles = e.target.files;
+    let allFiles = [];
     let urlArr = [];
 
-    if (allFiles) {
-      setFiles(allFiles);
-      for (const [index, file] of Object.entries(allFiles)) {
-        const fileName = generateFileName(file.name);
-        urlArr.push(URL.createObjectURL(file));
+    if (e.target.files) {
+      for (const [index, file] of Object.entries(e.target.files)) {
+        urlArr.push({ url: URL.createObjectURL(file) });
+        allFiles.push(file);
       }
-      setFileUrls(urlArr);
+      setFiles(allFiles);
+      setFileProp(urlArr);
     }
   }
 
   //   UPLOAD
-  const handleImgUpload = () => {
-    let imgUrls = [];
-    if (files) {
-      for (const [index, file] of Object.entries(files)) {
+  const handleImgUpload = async () => {
+    const imgUrls = [];
+    if (files && files[0]) {
+      files.map((file, index) => {
         const fileName = generateFileName(file.name);
         const storage = getStorage(app);
         const metadata = {
@@ -54,7 +57,10 @@ export default function UploadImg({ setImgs }) {
             const progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log("Upload is " + progress + "% done");
-            setProgressPercent(progress);
+
+            const fileDetails = [...fileProp];
+            fileDetails[index].progress = progress;
+            setFileProp(fileDetails);
             switch (snapshot.state) {
               case "paused":
                 console.log("Upload is paused");
@@ -84,35 +90,38 @@ export default function UploadImg({ setImgs }) {
                 break;
             }
           },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              console.log("File available at", downloadURL);
-              imgUrls.push(downloadURL);
-            });
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+            console.log("File available at", downloadURL);
+
+            imgUrls.push(downloadURL);
+
+            if (imgUrls[files?.length - 1]) {
+              setImgs(imgUrls);
+            }
           }
         );
-      }
+      });
     }
-    console.log(imgUrls);
-    setImgs(imgUrls);
   };
+
+  console.log(fileProp);
 
   //   REMOVE FILE
   const removeFile = (i) => {
-    if (files && fileUrls) {
+    if (files && fileProp) {
       const allFiles = [...files];
-      const allUrls = [...fileUrls];
+      const allProp = [...fileProp];
 
-      allUrls.splice(i, 1);
+      allProp.splice(i, 1);
       allFiles.splice(i, 1);
 
       setFiles(allFiles);
-      setFileUrls(allUrls);
+      setFileProp(allProp);
     }
   };
 
-  console.log(fileUrls);
-  console.log(files);
   return (
     <div className="flex gap-3 flex-col ">
       <div className="flex gap-3 justify-start items-center">
@@ -125,7 +134,7 @@ export default function UploadImg({ setImgs }) {
           type="file"
           accept="image/*"
           name="img"
-          multiple
+          multiple={isMultiple}
           className=" text-sm text-[--textSoft] bg-[--bgSofter] "
         />
         <div
@@ -136,18 +145,18 @@ export default function UploadImg({ setImgs }) {
         </div>
       </div>
       <div className="flex gap-5 flex-wrap">
-        {fileUrls &&
-          fileUrls.map((url, index) => (
+        {fileProp &&
+          fileProp.map((file, index) => (
             <div className="relative">
-              <Image src={url} height={70} width={70} alt="" />
-              {progressPercent && (
+              <Image src={file?.url} height={70} width={70} alt="" />
+              {file?.progress != undefined && (
                 <div className="w-full text-center bg-[--bgSofter] text-sm text-[--textSoft]">
-                  {progressPercent === 100
+                  {file?.progress === 100
                     ? "Done"
-                    : Math.floor(progressPercent) + "%"}
+                    : Math.floor(file?.progress) + "%"}
                 </div>
               )}
-              {!progressPercent && (
+              {!file?.progress && (
                 <MdCancel
                   className="absolute -right-3 -top-3 text-[--text] cursor-pointer"
                   onClick={() => removeFile(index)}

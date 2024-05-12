@@ -6,8 +6,8 @@ export const answerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    img: {
-      type: String,
+    imgs: {
+      type: Array,
     },
     star: {
       type: Number,

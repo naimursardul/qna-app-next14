@@ -4,22 +4,30 @@ import { CiEdit } from "react-icons/ci";
 import { AiOutlineDelete } from "react-icons/ai";
 import Star from "./Star/Star";
 import { useState } from "react";
-import Image from "next/image";
 import Comments from "@/components/Comments/Comments";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { updateAns } from "@/lib/data";
+import { deleteAnswer, updateAns } from "@/lib/data";
 
 export default function Answer({ props }) {
   const { ans, cmnts } = props;
   const [isEdit, setIsEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isPopUp, setIsPopUp] = useState(false);
 
+  // HANDLE EDIT ANSWER
   const handleEdit = async (formData) => {
     setIsEdit(!isEdit);
     console.log("clicked");
 
     await updateAns(formData);
   };
+
+  //   DELETE ANS
+  const handleDeleteAnswer = async () => {
+    setIsPopUp(!isPopUp);
+    await deleteAnswer(ans?._id);
+  };
+
   return (
     <div className="flex flex-col bg-[--bgSoft] rounded-xl">
       {isEdit ? (
@@ -58,13 +66,14 @@ export default function Answer({ props }) {
       ) : (
         <div>
           {/* IMAGE */}
-          <div className="flex flex-col gap-4 bg-gray-100">
-            <div className="relative h-[80vh]">
-              <Image src={`/qn1.png`} alt="" fill className="object-contain " />
-            </div>
-            <div className="relative h-[80vh] ">
-              <Image src={`/qn1.png`} alt="" fill className="object-contain " />
-            </div>
+          <div className="flex flex-col gap-4 h-[100%] overflow-y-auto">
+            {ans?.imgs[0] &&
+              ans.imgs.map((img, i) => (
+                // <div key={i} className="relative min-h-[400px] overflow-auto">
+                //   <Image src={img} alt="" fill className="object-cover" />
+                // </div>
+                <img key={i} src={img} alt="" className="object-contain " />
+              ))}
           </div>
           {/* ANSWER TEXT */}
           <p className="px-5 py-3 text-[--text]">{ans?.ans}</p>
@@ -91,11 +100,36 @@ export default function Answer({ props }) {
         </form>
 
         {/* DELETE BTN*/}
-        <form className="flex items-center" action={`#`}>
+        <form className="flex items-center" action={() => setIsPopUp(!isPopUp)}>
           <button className="hoverAnimate text-lg">
             <AiOutlineDelete />
           </button>
         </form>
+        {isPopUp && (
+          <div>
+            <div className="fixed top-0 left-0  h-screen w-screen z-20 opacity-50 bg-black "></div>
+            <div className="z-30 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[400px] rounded-md max-sm:w-[280px] flex flex-col gap-3 bg-[--bgSofter] px-5 py-4  ">
+              <h3 className="text-xl text-[--text] font-semibold ">Delete</h3>
+              <p className="text-sm text-[--text]">
+                Are you sure want to delete this Answer?
+              </p>
+              <div className="flex gap-3">
+                <button
+                  className="btn font-semibold rounded bg-[--bgSoftest] text-[--text]"
+                  onClick={() => setIsPopUp(!isPopUp)}
+                >
+                  No
+                </button>
+                <button
+                  className="btn font-semibold rounded bg-[--btn] text-[--text]"
+                  onClick={handleDeleteAnswer}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* COMMENTS */}

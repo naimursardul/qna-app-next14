@@ -4,13 +4,30 @@ import { IoIosSend } from "react-icons/io";
 import { useFormState } from "react-dom";
 import { RxCrossCircled } from "react-icons/rx";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
-import { submitAnswer } from "@/lib/data";
+import UploadImg from "../UploadImg/UploadImg";
+import { useState } from "react";
+import { createAnswer } from "@/lib/data";
+import { toast } from "react-toastify";
+import { toastProps } from "@/lib/utilities";
 
 export default function SubmitSolve({ params }) {
-  const [state, formAction] = useFormState(submitAnswer, undefined);
+  const [imgs, setImgs] = useState([]);
+  console.log(imgs);
+  const imgStr = imgs?.join(",");
 
-  const { id: qid } = params;
-  // console.log(qid);
+  const [state, formAction] = useFormState(createAnswer, undefined);
+
+  if (state?.err) {
+    toast.error(state.err, { toastId: state.err });
+    state.err = null;
+  }
+  if (state?.success) {
+    toast.success(state?.success, { toastId: state.err });
+    state.success = null;
+  }
+
+  const { id: qId } = params;
+  // console.log(qId);
   const userId = "85y23458484237";
   return (
     <div className="flex flex-col gap-8">
@@ -19,8 +36,8 @@ export default function SubmitSolve({ params }) {
       </h2>
       <form action={formAction} className="flex flex-col gap-4">
         {/* IMAGE */}
-        <input type="file" className="bg-[--bgSoftest] text-[--textSoft]" />
-
+        <input type="hidden" name="ansImgs" value={imgStr} />
+        <UploadImg props={{ setImgs, imgs, isMultiple: true }} />
         {/* ANSWER-TEXT */}
         <textarea
           placeholder="Type answer..."
@@ -33,15 +50,15 @@ export default function SubmitSolve({ params }) {
         <input type="hidden" name="userId" value={userId} />
 
         {/* QUESTION ID */}
-        <input type="hidden" name="qid" value={qid} />
+        <input type="hidden" name="qId" value={qId} />
 
         {/* Message */}
-        {state?.err && (
+        {/* {state?.err && (
           <div className="flex gap-1 text-red-800 items-center">
             <RxCrossCircled />
             <small>{state.err}</small>
           </div>
-        )}
+        )} */}
         {state?.success && (
           <div className="flex gap-1 text-green-900 items-center">
             <IoCheckmarkDoneCircle />
@@ -50,7 +67,10 @@ export default function SubmitSolve({ params }) {
         )}
 
         {/* BUTTON */}
-        <button className="btn rounded-md bg-[--btn] hover:bg-[--btnSoft] text-[--text] flex items-center">
+        <button
+          type="submit"
+          className="btn rounded-md bg-[--btn] hover:bg-[--btnSoft] text-[--text] flex items-center"
+        >
           <span>Submit</span>
           <IoIosSend />
         </button>

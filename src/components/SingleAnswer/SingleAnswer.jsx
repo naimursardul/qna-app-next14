@@ -29,7 +29,6 @@ export default async function SingleAnswer({ props }) {
       {/* ANSWER */}
       <div>
         <Answer props={{ ans, cmnts }} />
-        {/* { ans: { ...ans }, cmnts: { ...cmnts } } */}
       </div>
     </div>
   );

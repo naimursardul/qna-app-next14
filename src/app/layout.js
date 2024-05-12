@@ -2,6 +2,7 @@ import { Inter, Ubuntu } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 const ubuntu = Ubuntu({
@@ -20,7 +21,8 @@ export default function RootLayout({ children }) {
       <body className={ubuntu.className}>
         <div className="flex flex-col justify-between min-h-screen bg-[--bg] ">
           <Navbar />
-          {children}
+          <ToastContainer />
+          <main>{children}</main>
           <Footer />
         </div>
       </body>

@@ -2,8 +2,8 @@
 
 import { updateStar } from "@/lib/data";
 import { useState } from "react";
-import { CiStar } from "react-icons/ci";
-import { FaStar } from "react-icons/fa";
+import { MdOutlineStarOutline } from "react-icons/md";
+import { MdOutlineStarPurple500 } from "react-icons/md";
 
 export default function Star({ ans }) {
   const [star, setStar] = useState(false);
@@ -25,11 +25,15 @@ export default function Star({ ans }) {
   };
 
   return (
-    <form action={handleStar} className="flex items-center gap-[2px]">
-      <span>{val}</span>
-      <button className="hoverAnimate font-bold text-lg">
-        {star ? <FaStar className="text-blue-600" /> : <CiStar />}
+    <div className="flex items-center gap-[2px]">
+      <span className="text-md">{val}</span>
+      <button onClick={handleStar} className=" hoverAnimate font-bold text-lg ">
+        {star ? (
+          <MdOutlineStarPurple500 className="text-blue-600" />
+        ) : (
+          <MdOutlineStarOutline />
+        )}
       </button>
-    </form>
+    </div>
   );
 }

@@ -4,10 +4,9 @@ export const questionSchema = new mongoose.Schema(
   {
     ques: {
       type: String,
-      required: true,
     },
-    img: {
-      type: String,
+    imgs: {
+      type: Array,
     },
     userId: {
       type: String,
