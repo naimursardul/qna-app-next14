@@ -40,7 +40,7 @@ export default function UploadImg({ props }) {
   const handleImgUpload = async () => {
     const imgUrls = [];
     if (files && files[0]) {
-      for(let index=0; index<files?.length;index++) {
+      for (let index = 0; index < files?.length; index++) {
         const file = files[index];
         const fileName = generateFileName(file.name);
         const storage = getStorage(app);
@@ -102,7 +102,7 @@ export default function UploadImg({ props }) {
             }
           }
         );
-      });
+      }
     }
   };
 
