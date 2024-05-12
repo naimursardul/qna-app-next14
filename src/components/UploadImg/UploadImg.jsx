@@ -147,7 +147,7 @@ export default function UploadImg({ props }) {
       <div className="flex gap-5 flex-wrap">
         {fileProp &&
           fileProp.map((file, index) => (
-            <div className="relative">
+            <div key={index} className="relative">
               <Image src={file?.url} height={70} width={70} alt="" />
               {file?.progress != undefined && (
                 <div className="w-full text-center bg-[--bgSofter] text-sm text-[--textSoft]">
