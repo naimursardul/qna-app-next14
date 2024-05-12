@@ -7,8 +7,8 @@ export default function QnaBox({ ques }) {
       className="w-[300px]  flex flex-col bg-[--bgSoft] rounded-lg hoverAnimate p-3"
     >
       {ques?.imgs[0] &&
-        ques.imgs.map((img) => (
-          <div className="relative h-[200px] ">
+        ques.imgs.map((img, i) => (
+          <div key={i} className="relative h-[200px] ">
             <Image src={img} alt="" fill className="object-cover rounded-lg" />
           </div>
         ))}

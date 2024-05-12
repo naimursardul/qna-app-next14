@@ -11,7 +11,6 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function UploadImg({ props }) {
@@ -42,6 +41,7 @@ export default function UploadImg({ props }) {
     const imgUrls = [];
     if (files && files[0]) {
       files.map((file, index) => {
+        const key = index;
         const fileName = generateFileName(file.name);
         const storage = getStorage(app);
         const metadata = {

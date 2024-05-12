@@ -4,8 +4,8 @@ export default function QuestionSection({ ques }) {
   return (
     <div className="flex flex-col gap-10 ">
       {ques?.imgs[0] &&
-        ques.imgs.map((img) => (
-          <div className="relative min-h-[80vh] border-none ">
+        ques.imgs.map((img, i) => (
+          <div key={i} className="relative min-h-[80vh] border-none ">
             <Image src={img} alt="" fill className="object-contain " />
           </div>
         ))}
