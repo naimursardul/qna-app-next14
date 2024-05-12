@@ -2,10 +2,7 @@ import Image from "next/image";
 
 export default function QnaBox({ ques }) {
   return (
-    <div
-      href={`/questions/${ques?.id}`}
-      className="w-[300px]  flex flex-col bg-[--bgSoft] rounded-lg hoverAnimate p-3"
-    >
+    <div className="w-[300px] flex flex-col bg-[--bgSoft] rounded-lg hoverAnimate p-3">
       {ques?.imgs[0] &&
         ques.imgs.map((img, i) => (
           <div key={i} className="relative h-[200px] ">
