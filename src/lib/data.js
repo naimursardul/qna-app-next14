@@ -33,6 +33,8 @@ export const createQuestion = async (prev, formData) => {
 
     await newQ.save();
     console.log(newQ);
+
+    revalidatePath(`/questions/`);
     return { success: true, data: newQ?._doc };
   } catch (error) {
     console.log(error);
