@@ -8,9 +8,11 @@ import UploadImg from "../UploadImg/UploadImg";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import SubmitBtn from "../SubmitBtn";
 
 export default function QuesForm() {
   const { pending } = useFormStatus();
+  const res = useFormStatus();
   const [imgs, setImgs] = useState(null);
   const imgStr = imgs && imgs.join(",");
   const [state, formAction] = useFormState(createQuestion, undefined);
@@ -18,6 +20,8 @@ export default function QuesForm() {
   state?.err && [toast.error(state.err), (state.err = null)];
   state?.data && redirect(`/questions/${state.data?._id}`);
 
+  console.log(res);
+  console.log(pending);
   return (
     <form
       action={formAction}
@@ -103,13 +107,7 @@ export default function QuesForm() {
        *
        */}
 
-      <button
-        type="submit"
-        aria-disabled={pending}
-        className="btn bg-[--btn] hover:opacity-80 rounded-lg text-[--text]"
-      >
-        {pending ? "Submitting..." : "Submit"}
-      </button>
+      <SubmitBtn />
     </form>
   );
 }
