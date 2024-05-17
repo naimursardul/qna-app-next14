@@ -13,17 +13,20 @@ import { toast } from "react-hot-toast";
 export default function QuesForm() {
   const [imgs, setImgs] = useState(null);
   const imgStr = imgs?.join(",");
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (FormData) => {
     const toastId = toast.loading("Loading...");
-    const data = await createQuestion(FormData);
+    const res = await createQuestion(FormData);
 
-    data?.err && toast.error(data.err, { id: toastId });
-    data?.data && [toast.remove(toastId), redirect(`/questions`)];
+    console.log(res);
+
+    res?.err && toast.error(res.err, { id: toastId });
+    res?.data && [
+      toast.remove(toastId),
+      redirect(`/questions/${res.data?._id}`),
+    ];
   };
 
-  console.log(loading);
   return (
     <form
       action={handleSubmit}
