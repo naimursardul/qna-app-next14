@@ -1,7 +1,7 @@
 "use client";
 
 import { app } from "@/lib/firebase";
-import { generateFileName, toastProps } from "@/lib/utilities";
+import { generateFileName } from "@/lib/utilities";
 import Image from "next/image";
 import { MdCancel } from "react-icons/md";
 import {
@@ -11,7 +11,6 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { useState } from "react";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function UploadImg({ props }) {
   const { setImgs, imgs, isMultiple } = props;

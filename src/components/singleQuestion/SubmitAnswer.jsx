@@ -2,13 +2,11 @@
 
 import { IoIosSend } from "react-icons/io";
 import { useFormState } from "react-dom";
-import { RxCrossCircled } from "react-icons/rx";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import UploadImg from "../UploadImg/UploadImg";
 import { useState } from "react";
 import { createAnswer } from "@/lib/data";
-import { toast } from "react-toastify";
-import { toastProps } from "@/lib/utilities";
+import { toast } from "react-hot-toast";
 
 export default function SubmitSolve({ params }) {
   const [imgs, setImgs] = useState([]);
@@ -18,11 +16,11 @@ export default function SubmitSolve({ params }) {
   const [state, formAction] = useFormState(createAnswer, undefined);
 
   if (state?.err) {
-    toast.error(state.err, { toastId: state.err });
+    toast.error(state.err);
     state.err = null;
   }
   if (state?.success) {
-    toast.success(state?.success, { toastId: state.err });
+    toast.success(state?.success);
     state.success = null;
   }
 

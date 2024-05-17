@@ -5,18 +5,21 @@ import { Answer } from "./models/answer-model.js";
 import { Question } from "./models/question-model.js";
 import { chaps, connectDB, subs } from "./utilities.js";
 import { Comment } from "./models/comment-model.js";
-import { Bounce, toast } from "react-toastify";
 
 // CREATE QUESTION
-export const createQuestion = async (prev, formData) => {
+export const createQuestion = async (formData) => {
   const { ques, chap, imgs, sub, userId } = Object.fromEntries(formData);
   console.log(imgs);
+  console.log(ques);
 
   try {
     await connectDB();
 
-    if (!(ques || chap || sub)) {
-      return { err: "Please fill up the required fields" };
+    console.log((ques && chap && sub) === true);
+
+    if (!(ques && chap && sub)) {
+      console.log("err");
+      return { err: "Please fill up the required fields", data: null };
     }
 
     const qObj = {
@@ -35,10 +38,10 @@ export const createQuestion = async (prev, formData) => {
     console.log(newQ);
 
     revalidatePath(`/questions/`);
-    return { success: true, data: newQ?._doc };
+    return { err: null, data: newQ?._doc };
   } catch (error) {
     console.log(error);
-    return { err: "Error in Server-side. Try again!" };
+    return { err: "Error in Server-side. Try again!", data: null };
   }
 };
 

@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import crypto from "crypto";
-import { Bounce } from "react-toastify";
 
 const connection = {};
 
@@ -70,5 +69,4 @@ export const toastProps = {
   draggable: true,
   progress: undefined,
   theme: "light",
-  transition: Bounce,
 };

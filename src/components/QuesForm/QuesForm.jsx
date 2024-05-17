@@ -8,21 +8,25 @@ import { chaps, subs } from "@/lib/utilities";
 import UploadImg from "../UploadImg/UploadImg";
 import { redirect } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function QuesForm() {
-  const [state, formAction] = useFormState(createQuestion, undefined);
   const [imgs, setImgs] = useState(null);
-  console.log(imgs);
   const imgStr = imgs?.join(",");
+  const [loading, setLoading] = useState(false);
 
-  if (state?.success && state?.data) {
-    redirect(`/questions/${state.data?._id}`);
-  }
+  const handleSubmit = async (FormData) => {
+    const toastId = toast.loading("Loading...");
+    const data = await createQuestion(FormData);
 
+    data?.err && toast.error(data.err, { id: toastId });
+    data?.data && [toast.remove(toastId), redirect(`/questions`)];
+  };
+
+  console.log(loading);
   return (
     <form
-      action={formAction}
-      // className="flex flex-col gap-5  p-8 max-sm:px-5 rounded-lg border-none outline-none shadowColor"
+      action={handleSubmit}
       className="flex flex-col gap-5 bg-[--bgSoft] p-8 max-sm:px-5 rounded-lg border-none outline-none "
     >
       <h1 className="text-3xl text-[--btnSoft] mb-5">Ask your question</h1>
@@ -108,12 +112,12 @@ export default function QuesForm() {
        *
        */}
       {/* Message */}
-      {state?.err && (
+      {/* {state?.err && (
         <div className="flex gap-1 text-red-800 items-center">
           <RxCrossCircled />
           <small>{state.err}</small>
         </div>
-      )}
+      )} */}
 
       <button className="btn bg-[--btn] hover:bg-[--btnSoft] rounded-lg text-[--text]">
         Submit
