@@ -12,19 +12,39 @@ import { toast } from "react-hot-toast";
 
 export default function QuesForm() {
   const [imgs, setImgs] = useState(null);
-  const imgStr = imgs?.join(",");
+
+  const [pending, setPending] = useState(false);
 
   const handleSubmit = async (FormData) => {
-    const toastId = toast.loading("Loading...");
-    const res = await createQuestion(FormData);
+    setPending(true);
+    const { ques, chap, imgs, sub, userId } = Object.fromEntries(FormData);
+    console.log(imgs);
+    console.log(ques);
 
+    if (!(ques && chap && sub)) {
+      toast.error("Please, fill up the required field");
+      setPending(false);
+      return;
+    }
+
+    const qObj = {
+      ques,
+      chap,
+      sub,
+      userId,
+      userId: "283r84fuwe",
+      class: "HSC",
+    };
+    if (imgs && imgs[0]) qObj.imgs = imgs;
+
+    console.log(qObj);
+
+    const res = await createQuestion(qObj);
     console.log(res);
+    setPending(false);
 
-    res?.err && toast.error(res.err, { id: toastId });
-    res?.data && [
-      toast.remove(toastId),
-      redirect(`/questions/${res.data?._id}`),
-    ];
+    res?.err && toast.error(res.err);
+    res?.data && redirect(`/questions/${res.data?._id}`);
   };
 
   return (
@@ -46,7 +66,7 @@ export default function QuesForm() {
           name="sub"
           className="bg-[--bgSofter] text-[--text] px-2 py-1 rounded-md outline-none"
         >
-          <option value={false}>Select</option>
+          <option value="">Select</option>
           {subs?.map((sub, index) => (
             <option key={index} value={sub}>
               {sub}
@@ -67,7 +87,7 @@ export default function QuesForm() {
           name="chap"
           className="bg-[--bgSofter] text-[--text] px-2 py-1 rounded-md outline-none"
         >
-          <option value={false}>Select</option>
+          <option value="">Select</option>
           {chaps?.map((chap, index) => (
             <option key={index} value={chap}>
               {chap}
@@ -80,7 +100,6 @@ export default function QuesForm() {
        *
        */}
       {/* IMG */}
-      <input type="hidden" name="imgs" value={imgStr} />
       <UploadImg props={{ setImgs, imgs, isMultiple: false }} />
       {/*
        *
@@ -104,14 +123,7 @@ export default function QuesForm() {
           className="border bg-[--bgSofter] rounded-lg border-none outline-none py-3 px-4 text-[--text]"
         />
       </div>
-      {/*
-       *
-       *
-       */}
-      {/* User ID */}
-      <input type="hidden" name="userId" value={"1324453408"} />
-      {/* CLASS */}
-      <input type="hidden" name="class" value={"HSC"} />
+
       {/*
        *
        *
@@ -126,9 +138,10 @@ export default function QuesForm() {
 
       <button
         type="submit"
-        className="btn bg-[--btn] hover:bg-[--btnSoft] rounded-lg text-[--text]"
+        disabled={pending}
+        className="btn bg-[--btn] hover:opacity-80 rounded-lg text-[--text]"
       >
-        Submit
+        {pending ? "Submitting..." : "Submit"}
       </button>
     </form>
   );
