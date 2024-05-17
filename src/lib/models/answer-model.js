@@ -4,7 +4,6 @@ export const answerSchema = new mongoose.Schema(
   {
     ans: {
       type: String,
-      required: true,
     },
     imgs: {
       type: Array,

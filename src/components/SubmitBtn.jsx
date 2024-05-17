@@ -1,6 +1,7 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
+import { IoIosSend } from "react-icons/io";
 
 export default function SubmitBtn() {
   const { pending } = useFormStatus();
@@ -13,7 +14,13 @@ export default function SubmitBtn() {
       aria-disabled={pending}
       className="btn bg-[--btn] hover:opacity-80 rounded-lg text-[--text]"
     >
-      {pending ? "Adding..." : "Add"}
+      {pending ? (
+        <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-[--text]"></div>
+      ) : (
+        <div className="flex items-center gap-2">
+          Submit <IoIosSend />
+        </div>
+      )}
     </button>
   );
 }

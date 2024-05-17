@@ -50,7 +50,9 @@ export default async function page({ params }) {
         {answers && answers[0] ? (
           answers.map((ans, i) => <SingleAnswer key={i} props={{ ans, i }} />)
         ) : (
-          <small className="text-gray-400 ml-5">No Answer Submitted yet</small>
+          <small className="text-[--textSoft] ml-5">
+            No Answer Submitted yet
+          </small>
         )}
       </div>
 

@@ -75,7 +75,13 @@ export default function QuesForm() {
        *
        */}
       {/* IMG */}
-      <UploadImg props={{ setImgs, imgs, isMultiple: false }} />
+      <div className="flex flex-col gap-2 justify-start">
+        <label htmlFor="imgs" className="font-semibold text-[--textSoft]">
+          Image:
+        </label>
+        <input type="hidden" name="imgs" value={imgStr} />
+        <UploadImg props={{ setImgs, imgs, isMultiple: false }} />
+      </div>
       {/*
        *
        *
@@ -99,7 +105,6 @@ export default function QuesForm() {
         />
       </div>
 
-      <input type="hidden" name="imgs" value={imgStr} />
       <input type="hidden" name="userId" value={"krjfi988"} />
       <input type="hidden" name="studentClass" value={"HSC"} />
       {/*

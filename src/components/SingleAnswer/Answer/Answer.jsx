@@ -7,20 +7,31 @@ import { useState } from "react";
 import Comments from "@/components/Comments/Comments";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { deleteAnswer, updateAns } from "@/lib/data";
+import { useFormState } from "react-dom";
+import SubmitBtn from "@/components/SubmitBtn";
+import UploadImg from "@/components/UploadImg/UploadImg";
+import { toast } from "react-hot-toast";
 
 export default function Answer({ props }) {
   const { ans, cmnts } = props;
   const [isEdit, setIsEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isPopUp, setIsPopUp] = useState(false);
+  const [imgs, setImgs] = useState([]);
+  const imgStr = imgs?.join(",");
+  console.log(imgStr);
 
-  // HANDLE EDIT ANSWER
-  const handleEdit = async (formData) => {
+  const [state, formAction] = useFormState(updateAns, undefined);
+
+  if (state?.err) {
+    toast.error(state.err);
+    state.err = null;
+  }
+  if (state?.success) {
     setIsEdit(!isEdit);
-    console.log("clicked");
-
-    await updateAns(formData);
-  };
+    toast.success(state?.success);
+    state.success = null;
+  }
 
   //   DELETE ANS
   const handleDeleteAnswer = async () => {
@@ -33,29 +44,20 @@ export default function Answer({ props }) {
       {isEdit ? (
         <>
           <form
-            action={handleEdit}
+            action={formAction}
             className="flex flex-col gap-5 px-4 pt-5 mb-4  "
           >
             <input type="hidden" name="ansId" value={ans?._id} />
-            <input
-              type="file"
-              name="img"
-              className="text-[--textSoft] bg-[--bgSoftest] "
-            />
+            {/* IMAGE */}
+            <input type="hidden" name="ansImgs" value={imgStr} />
+            <UploadImg props={{ setImgs, imgs, isMultiple: true }} />
             <textarea
               name="newAns"
               rows="10"
               defaultValue={ans?.ans}
               className="px-4 py-2 border outline-none border-none rounded bg-[--bgSoftest] text-[--text]"
             ></textarea>
-            <div className=" flex gap-2">
-              <button
-                type="submit"
-                className=" btn bg-[--btn] text-[--text] rounded"
-              >
-                Update
-              </button>
-            </div>
+            <SubmitBtn />
           </form>
           <form action={() => setIsEdit(!isEdit)} className="px-4">
             <button className="btn bg-[--bgSofter] text-[--text] rounded">

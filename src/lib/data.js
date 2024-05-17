@@ -86,19 +86,18 @@ export const createAnswer = async (prev, formData) => {
   const { qId, userId, ans, ansImgs } = Object.fromEntries(formData);
   console.log(ansImgs.split(","));
 
+  if (!(ans || ansImgs)) {
+    return { err: "Please fill up the required fields" };
+  }
   try {
     await connectDB();
-
-    if (!ans) {
-      return { err: "Please fill up the required fields" };
-    }
 
     const ansObj = {
       qId,
       userId,
       ans,
-      imgs: ansImgs.split(",") || [],
     };
+    if (ansImgs) ansObj.imgs = ansImgs.split(",");
 
     const res = await new Answer(ansObj);
 
@@ -157,21 +156,21 @@ export const updateStar = async (data) => {
 };
 
 // UPDATE ANSWER
-export const updateAns = async (formData) => {
-  const { ansId, newAns, img } = Object.fromEntries(formData);
+export const updateAns = async (prev, formData) => {
+  const { ansId, newAns, ansImgs } = Object.fromEntries(formData);
 
-  console.log(ansId, newAns, img);
+  console.log(ansId, newAns, ansImgs);
 
-  if (!newAns) return false;
-
-  const ansObj = { ans: newAns };
+  const ansObj = {
+    ans: newAns,
+  };
+  if (ansImgs) ansObj.imgs = ansImgs.split(",");
 
   try {
     await connectDB();
 
     const answer = await Answer.findById(ansId);
-
-    if (!answer) return false;
+    if (!answer) return { err: "Answer not found" };
 
     const newAnswer = await Answer.findByIdAndUpdate(ansId, ansObj, {
       new: true,
@@ -180,9 +179,10 @@ export const updateAns = async (formData) => {
     console.log(newAnswer);
 
     revalidatePath(`/questions/${answer._doc.qId}`);
-    return true;
+    return { success: "Question updated successfully" };
   } catch (error) {
     console.log(error);
+    return { err: "Error in Server-side. Try again!" };
   }
 };
 

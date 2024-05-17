@@ -1,12 +1,12 @@
 "use client";
 
-import { IoIosSend } from "react-icons/io";
 import { useFormState } from "react-dom";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import UploadImg from "../UploadImg/UploadImg";
 import { useState } from "react";
 import { createAnswer } from "@/lib/data";
 import { toast } from "react-hot-toast";
+import SubmitBtn from "../SubmitBtn";
 
 export default function SubmitSolve({ params }) {
   const [imgs, setImgs] = useState([]);
@@ -25,7 +25,6 @@ export default function SubmitSolve({ params }) {
   }
 
   const { id: qId } = params;
-  // console.log(qId);
   const userId = "85y23458484237";
   return (
     <div className="flex flex-col gap-8">
@@ -50,28 +49,8 @@ export default function SubmitSolve({ params }) {
         {/* QUESTION ID */}
         <input type="hidden" name="qId" value={qId} />
 
-        {/* Message */}
-        {/* {state?.err && (
-          <div className="flex gap-1 text-red-800 items-center">
-            <RxCrossCircled />
-            <small>{state.err}</small>
-          </div>
-        )} */}
-        {state?.success && (
-          <div className="flex gap-1 text-green-900 items-center">
-            <IoCheckmarkDoneCircle />
-            <small>{state.success}</small>
-          </div>
-        )}
-
         {/* BUTTON */}
-        <button
-          type="submit"
-          className="btn rounded-md bg-[--btn] hover:bg-[--btnSoft] text-[--text] flex items-center"
-        >
-          <span>Submit</span>
-          <IoIosSend />
-        </button>
+        <SubmitBtn />
       </form>
     </div>
   );

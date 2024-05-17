@@ -124,10 +124,6 @@ export default function UploadImg({ props }) {
   return (
     <div className="flex gap-3 flex-col ">
       <div className="flex gap-3 justify-start items-center">
-        <label htmlFor="sub" className="font-semibold text-[--textSoft]">
-          Image:
-        </label>
-
         <input
           onChange={onInputChange}
           type="file"
@@ -138,7 +134,7 @@ export default function UploadImg({ props }) {
         />
         <div
           onClick={handleImgUpload}
-          className="px-2 py-1 rounded-md  bg-[--btnSoft] text-[--bgSoft] hover:text-[--text] cursor-pointer"
+          className="px-2 py-1 rounded-md bg-[--btnSoft] text-[--text] text-sm hover:opacity-85 cursor-pointer"
         >
           Upload
         </div>
