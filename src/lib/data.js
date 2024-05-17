@@ -7,7 +7,25 @@ import { chaps, connectDB, subs } from "./utilities.js";
 import { Comment } from "./models/comment-model.js";
 
 // CREATE QUESTION
-export const createQuestion = async (qObj) => {
+export const createQuestion = async (prev, formData) => {
+  const { ques, imgs, chap, sub, userId, studentClass } =
+    Object.fromEntries(formData);
+  console.log(imgs);
+  console.log(ques);
+
+  if (!(ques && chap && sub)) {
+    return { err: "Please, fill up the required field", data: null };
+  }
+
+  const qObj = {
+    ques,
+    chap,
+    sub,
+    userId,
+    studentClass,
+  };
+
+  if (imgs) qObj.imgs = imgs.split(",");
   console.log(qObj);
 
   try {
@@ -15,10 +33,10 @@ export const createQuestion = async (qObj) => {
 
     const res = await new Question(qObj);
     await res.save();
-    console.log(res);
+    console.log(res?._doc);
 
     revalidatePath(`/questions/`);
-    return { err: null, data: res };
+    return { err: null, data: res?._doc };
   } catch (error) {
     console.log(error);
     return { err: "Error in Server-side. Try again!", data: null };

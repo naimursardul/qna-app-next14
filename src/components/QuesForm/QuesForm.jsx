@@ -2,8 +2,7 @@
 
 import { createQuestion } from "@/lib/data";
 import { useFormState } from "react-dom";
-import { RxCrossCircled } from "react-icons/rx";
-import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { useFormStatus } from "react-dom";
 import { chaps, subs } from "@/lib/utilities";
 import UploadImg from "../UploadImg/UploadImg";
 import { redirect } from "next/navigation";
@@ -11,45 +10,17 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 export default function QuesForm() {
+  const { pending } = useFormStatus();
   const [imgs, setImgs] = useState(null);
+  const imgStr = imgs && imgs.join(",");
+  const [state, formAction] = useFormState(createQuestion, undefined);
 
-  const [pending, setPending] = useState(false);
-
-  const handleSubmit = async (FormData) => {
-    setPending(true);
-    const { ques, chap, imgs, sub, userId } = Object.fromEntries(FormData);
-    console.log(imgs);
-    console.log(ques);
-
-    if (!(ques && chap && sub)) {
-      toast.error("Please, fill up the required field");
-      setPending(false);
-      return;
-    }
-
-    const qObj = {
-      ques,
-      chap,
-      sub,
-      userId,
-      userId: "283r84fuwe",
-      class: "HSC",
-    };
-    if (imgs && imgs[0]) qObj.imgs = imgs;
-
-    console.log(qObj);
-
-    const res = await createQuestion(qObj);
-    console.log(res);
-    setPending(false);
-
-    res?.err && toast.error(res.err);
-    res?.data && redirect(`/questions/${res.data?._id}`);
-  };
+  state?.err && [toast.error(state.err), (state.err = null)];
+  state?.data && redirect(`/questions/${state.data?._id}`);
 
   return (
     <form
-      action={handleSubmit}
+      action={formAction}
       className="flex flex-col gap-5 bg-[--bgSoft] p-8 max-sm:px-5 rounded-lg border-none outline-none "
     >
       <h1 className="text-3xl text-[--btnSoft] mb-5">Ask your question</h1>
@@ -124,21 +95,17 @@ export default function QuesForm() {
         />
       </div>
 
+      <input type="hidden" name="imgs" value={imgStr} />
+      <input type="hidden" name="userId" value={"krjfi988"} />
+      <input type="hidden" name="studentClass" value={"HSC"} />
       {/*
        *
        *
        */}
-      {/* Message */}
-      {/* {state?.err && (
-        <div className="flex gap-1 text-red-800 items-center">
-          <RxCrossCircled />
-          <small>{state.err}</small>
-        </div>
-      )} */}
 
       <button
         type="submit"
-        disabled={pending}
+        aria-disabled={pending}
         className="btn bg-[--btn] hover:opacity-80 rounded-lg text-[--text]"
       >
         {pending ? "Submitting..." : "Submit"}

@@ -9,7 +9,7 @@ export const questionSchema = new mongoose.Schema(
     imgs: {
       type: Array,
     },
-    class: {
+    studentClass: {
       type: String,
       required: true,
     },
