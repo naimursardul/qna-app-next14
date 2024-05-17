@@ -15,13 +15,11 @@ export default function QuesForm() {
   const imgStr = imgs?.join(",");
 
   const handleSubmit = async (FormData) => {
-    setLoading(true);
     const toastId = toast.loading("Loading...");
     const res = await createQuestion(FormData);
 
     console.log(res);
 
-    setLoading(false);
     res?.err && toast.error(res.err, { id: toastId });
     res?.data && [
       toast.remove(toastId),
