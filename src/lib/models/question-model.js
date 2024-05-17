@@ -8,6 +8,10 @@ export const questionSchema = new mongoose.Schema(
     imgs: {
       type: Array,
     },
+    class: {
+      type: String,
+      required: true,
+    },
     userId: {
       type: String,
       required: true,

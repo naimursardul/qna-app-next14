@@ -15,11 +15,13 @@ export default function QuesForm() {
   const imgStr = imgs?.join(",");
 
   const handleSubmit = async (FormData) => {
+    setLoading(true);
     const toastId = toast.loading("Loading...");
     const res = await createQuestion(FormData);
 
     console.log(res);
 
+    setLoading(false);
     res?.err && toast.error(res.err, { id: toastId });
     res?.data && [
       toast.remove(toastId),
@@ -110,6 +112,8 @@ export default function QuesForm() {
        */}
       {/* User ID */}
       <input type="hidden" name="userId" value={"1324453408"} />
+      {/* CLASS */}
+      <input type="hidden" name="class" value={"HSC"} />
       {/*
        *
        *
@@ -122,7 +126,10 @@ export default function QuesForm() {
         </div>
       )} */}
 
-      <button className="btn bg-[--btn] hover:bg-[--btnSoft] rounded-lg text-[--text]">
+      <button
+        type="submit"
+        className="btn bg-[--btn] hover:bg-[--btnSoft] rounded-lg text-[--text]"
+      >
         Submit
       </button>
     </form>
