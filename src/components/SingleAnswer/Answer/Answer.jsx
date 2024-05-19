@@ -6,7 +6,7 @@ import Star from "./Star/Star";
 import { useState } from "react";
 import Comments from "@/components/Comments/Comments";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { deleteAnswer, updateAns } from "@/lib/data";
+import { deleteAnswer, updateAns } from "@/lib/action";
 import { useFormState } from "react-dom";
 import SubmitBtn from "@/components/SubmitBtn";
 import UploadImg from "@/components/UploadImg/UploadImg";

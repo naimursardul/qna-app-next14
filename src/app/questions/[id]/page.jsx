@@ -1,7 +1,7 @@
 import SingleAnswer from "@/components/SingleAnswer/SingleAnswer";
 import QuestionSection from "@/components/singleQuestion/QuestionSection";
 import SubmitSolve from "@/components/singleQuestion/SubmitAnswer";
-import { getAllAnswers, getSingleQuestion } from "@/lib/data";
+import { getAllAnswers, getSingleQuestion } from "@/lib/action";
 import Link from "next/link";
 
 export const generateMetadata = async ({ params }) => {

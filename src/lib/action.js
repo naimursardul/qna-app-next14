@@ -3,8 +3,10 @@
 import { revalidatePath } from "next/cache.js";
 import { Answer } from "./models/answer-model.js";
 import { Question } from "./models/question-model.js";
-import { chaps, connectDB, subs } from "./utilities.js";
+import { chaps, connectDB, hashedStr, subs } from "./utilities.js";
 import { Comment } from "./models/comment-model.js";
+import { User } from "./models/user-model.js";
+import { redirect } from "next/navigation.js";
 
 // CREATE QUESTION
 export const createQuestion = async (prev, formData) => {
@@ -297,4 +299,33 @@ export const deleteComment = async (cmnt) => {
     console.log(error);
     return false;
   }
+};
+
+// USER SIGN_UP
+export const registerUser = async (prev, formData) => {
+  const { username, email, phone, password, confirmPassword } =
+    Object.fromEntries(formData);
+
+  console.log(username, email, phone, password, confirmPassword);
+
+  if (!(username || email || phone || password || confirmPassword)) {
+    return { err: "Please, fill up the required fields." };
+  }
+  if (password !== confirmPassword) {
+    return { err: "Password doesn't match." };
+  }
+
+  let userObj = { username, email, phone, password: hashedStr(password) };
+  console.log(userObj);
+
+  try {
+    await connectDB();
+
+    const newUser = await new User({ userObj });
+    await newUser.save();
+  } catch (error) {
+    console.log(error);
+    return { err: "Something went wrong." };
+  }
+  redirect("/login");
 };

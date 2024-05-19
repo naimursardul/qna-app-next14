@@ -1,6 +1,6 @@
 "use client";
 
-import { createQuestion } from "@/lib/data";
+import { createQuestion } from "@/lib/action";
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
 import { chaps, subs } from "@/lib/utilities";

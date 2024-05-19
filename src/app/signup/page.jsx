@@ -1,18 +1,29 @@
+"use client";
+
 import Link from "next/link";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { SiGnuprivacyguard } from "react-icons/si";
+import { useFormState } from "react-dom";
+import { registerUser } from "@/lib/action";
+import { toast } from "react-hot-toast";
 
 export default function SignUpForm() {
+  const [state, formAction] = useFormState(registerUser, undefined);
+
+  if (state?.err) {
+    toast.error(state.err);
+    state.err = null;
+  }
+
   return (
     <div className="my-8 flex flex-row-reverse gap-12 max-md:flex-col w-[600px] max-md:w-[300px] bg-[--bgSoft] mx-auto px-8 py-8 rounded-xl">
-      {/* <div className="my-8 flex flex-row-reverse gap-12 max-md:flex-col w-[600px] max-md:w-[300px] mx-auto px-8 py-8 rounded shadowColor"> */}
       {/* with credentials */}
       <div className="w-full">
         <h1 className="flex gap-2 items-center text-3xl text-[--btnSoft] font-[400] mb-4 max-md:text-center">
           <span>Sign Up</span>
           <SiGnuprivacyguard />
         </h1>
-        <form action="#" className="flex flex-col gap-3">
+        <form action={formAction} className="flex flex-col gap-3">
           <input
             type="text"
             name="username"

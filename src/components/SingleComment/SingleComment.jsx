@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteComment, updateComment } from "@/lib/data";
+import { deleteComment, updateComment } from "@/lib/action";
 import Image from "next/image";
 import { useState } from "react";
 

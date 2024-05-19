@@ -1,4 +1,4 @@
-import { addComment } from "@/lib/data";
+import { addComment } from "@/lib/action";
 
 export default function CreateComment({ ans }) {
   return (

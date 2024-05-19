@@ -17,7 +17,7 @@ export const connectDB = async () => {
   }
 };
 
-export const hash = (str) => {
+export const hashedStr = (str) => {
   const hash = crypto
     .createHmac("sha256", process.env.HASH_SECRET)
     .update(str)
@@ -59,14 +59,3 @@ export const chaps = [
   "11",
   "12",
 ];
-
-export const toastProps = {
-  position: "top-center",
-  autoClose: 3000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "light",
-};
