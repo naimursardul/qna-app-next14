@@ -1,8 +1,7 @@
-import NextAuth from "next-auth";
-import { authConfig } from "./lib/authConfig";
+import { clerkMiddleware } from "@clerk/nextjs/server";
 
-export default NextAuth(authConfig).auth;
+export default clerkMiddleware({});
 
 export const config = {
-  matcher: ["/((?!api|static|.*\\..*|_next).*)"],
+  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };

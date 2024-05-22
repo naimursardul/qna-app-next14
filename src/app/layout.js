@@ -1,10 +1,12 @@
-import { Inter, Ubuntu } from "next/font/google";
+import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { Toaster } from "react-hot-toast";
+import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
+import Loader from "@/components/Loader/loader";
 
-const inter = Inter({ subsets: ["latin"] });
 const ubuntu = Ubuntu({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
@@ -17,15 +19,25 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={ubuntu.className}>
-        <div className="flex flex-col justify-between min-h-screen bg-[--bg] ">
-          <Navbar />
-          <Toaster />
-          <main>{children}</main>
-          <Footer />
-        </div>
-      </body>
-    </html>
+    <ClerkProvider appearance={dark}>
+      <html lang="en">
+        <body className={ubuntu.className}>
+          <ClerkLoading>
+            <div className="bg-[--bg]">
+              <Loader />
+            </div>
+          </ClerkLoading>
+
+          <div className="flex flex-col justify-between min-h-screen bg-[--bg] ">
+            <ClerkLoaded>
+              <Navbar />
+              <Toaster />
+              {children}
+              <Footer />
+            </ClerkLoaded>
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -1,7 +1,9 @@
+import { UserButton } from "@clerk/nextjs";
 import MobileLinks from "../MobileLinks/MobileLinks";
 import NavLink from "./NavLink/NavLink";
+import { auth } from "@clerk/nextjs/server";
 
-export default function Navbar() {
+export default async function Navbar() {
   const links = [
     { name: "Home", path: "/" },
     { name: "Ask Question", path: "/ask-question" },
@@ -9,8 +11,8 @@ export default function Navbar() {
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
-  const session = false;
-
+  const { userId: session } = auth();
+  console.log(session);
   return (
     <div className="px-[50px] flex justify-between items-center h-[75px] shadow-md ">
       <h2 className="text-2xl text-[--text]">BRAND NAME</h2>
@@ -20,10 +22,14 @@ export default function Navbar() {
             <NavLink link={link} key={index} />
           ))}
         </div>
-        {!session && (
+        {session ? (
+          <div>
+            <UserButton />{" "}
+          </div>
+        ) : (
           <div className="flex gap-2">
-            <NavLink link={{ name: "Sign up", path: "/signup" }} />
-            <NavLink link={{ name: "Log in", path: "/login" }} />
+            <NavLink link={{ name: "Sign up", path: "/sign-up" }} />
+            <NavLink link={{ name: "Log in", path: "/sign-in" }} />
           </div>
         )}
       </div>
