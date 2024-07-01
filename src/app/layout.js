@@ -22,19 +22,19 @@ export default function RootLayout({ children }) {
     <ClerkProvider appearance={dark}>
       <html lang="en">
         <body className={ubuntu.className}>
-          <ClerkLoading>
+          {/* <ClerkLoading>
             <div className="bg-[--bg]">
               <Loader />
             </div>
-          </ClerkLoading>
+          </ClerkLoading> */}
 
           <div className="flex flex-col justify-between min-h-screen bg-[--bg] ">
-            <ClerkLoaded>
-              <Navbar />
-              <Toaster />
-              {children}
-              <Footer />
-            </ClerkLoaded>
+            {/* <ClerkLoaded> */}
+            <Navbar />
+            <Toaster />
+            {children}
+            <Footer />
+            {/* </ClerkLoaded> */}
           </div>
         </body>
       </html>

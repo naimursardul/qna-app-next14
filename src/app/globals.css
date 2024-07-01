@@ -22,6 +22,10 @@
   scroll-behavior: smooth;
 }
 
+.globPad {
+  @apply px-[100px] max-md:px-[50px] max-sm:px-[25px] py-[80px] max-md:py-[50px];
+}
+
 .skewBox {
   -webkit-transform: skewX(-10deg);
   -moz-transform: skewX(-10deg);
