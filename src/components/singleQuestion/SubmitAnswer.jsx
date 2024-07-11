@@ -4,7 +4,7 @@ import { useFormState } from "react-dom";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import UploadImg from "../UploadImg/UploadImg";
 import { useState } from "react";
-import { createAnswer } from "@/lib/action";
+import { createAnswer } from "@/lib/server_actions/action";
 import { toast } from "react-hot-toast";
 import SubmitBtn from "../SubmitBtn";
 

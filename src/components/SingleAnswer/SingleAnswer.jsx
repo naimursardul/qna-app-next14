@@ -1,5 +1,5 @@
 import { FaStar } from "react-icons/fa";
-import { getAllComments } from "@/lib/action";
+import { getAllComments } from "@/lib/server_actions/action";
 import Answer from "./Answer/Answer";
 
 export default async function SingleAnswer({ props }) {

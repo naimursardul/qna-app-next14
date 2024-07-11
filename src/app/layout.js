@@ -5,7 +5,6 @@ import Footer from "@/components/Footer/Footer";
 import { Toaster } from "react-hot-toast";
 import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import Loader from "@/components/Loader/Loader";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],

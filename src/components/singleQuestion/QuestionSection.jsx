@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function QuestionSection({ ques }) {
   return (
     <div className="flex flex-col gap-10 ">
-      {ques?.imgs[0] &&
+      {/* {ques?.imgs.length &&
         ques.imgs.map((img, i) => (
           <div key={i} className="relative min-h-[80vh] border-none ">
             <Image src={img} alt="" fill className="object-contain " />
@@ -15,7 +15,7 @@ export default function QuestionSection({ ques }) {
           <p>{`Chapter: ` + ques?.chap}</p>
         </div>
         <p className="text-[--textSoft]">{ques?.ques}</p>
-      </div>
+      </div> */}
     </div>
   );
 }

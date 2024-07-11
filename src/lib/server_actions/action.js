@@ -1,11 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache.js";
-import { Answer } from "./models/answer-model.js";
-import { Question } from "./models/question-model.js";
-import { chaps, connectDB, hashedStr, subs } from "./utilities.js";
-import { Comment } from "./models/comment-model.js";
-import { User } from "./models/user-model.js";
+import { Answer } from "../models/answer-model.js";
+import { Question } from "../models/question-model.js";
+import { chaps, connectDB, hashedStr, subs } from "../utilities.js";
+import { Comment } from "../models/comment-model.js";
+import { User } from "../models/user-model.js";
 import { redirect } from "next/navigation.js";
 
 // CREATE QUESTION
@@ -69,19 +69,19 @@ export const getAllQuestions = async ({ chap, sub, search }) => {
   }
 };
 
-// GET SINGLE QUESTION
-export const getSingleQuestion = async ({ id }) => {
-  try {
-    await connectDB();
+// // GET SINGLE QUESTION
+// export const getSingleQuestion = async ({ id }) => {
+//   try {
+//     await connectDB();
 
-    const res = await Question.findById(id);
-    // console.log(res);
+//     const res = await Question.findById(id);
+//     // console.log(res);
 
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     return res;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 // SUBMIT ANSWER
 export const createAnswer = async (prev, formData) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { updateStar } from "@/lib/action";
+import { updateStar } from "@/lib/server_actions/action";
 import { useState } from "react";
 import { MdOutlineStarOutline } from "react-icons/md";
 import { MdOutlineStarPurple500 } from "react-icons/md";

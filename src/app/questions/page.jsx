@@ -1,6 +1,6 @@
 import QnaBox from "@/components/QnaBox/QnaBox";
 import SearchFilter from "@/components/SearchFilter/SearchFilter";
-import { getAllQuestions } from "@/lib/action";
+import { getAllQuestions } from "@/lib/server_actions/action";
 import Link from "next/link";
 
 export default async function AllQuestions({ searchParams }) {

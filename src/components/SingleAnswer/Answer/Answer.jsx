@@ -6,7 +6,7 @@ import Star from "./Star/Star";
 import { useState } from "react";
 import Comments from "@/components/Comments/Comments";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { deleteAnswer, updateAns } from "@/lib/action";
+import { deleteAnswer, updateAns } from "@/lib/server_actions/action";
 import { useFormState } from "react-dom";
 import SubmitBtn from "@/components/SubmitBtn";
 import UploadImg from "@/components/UploadImg/UploadImg";
@@ -88,25 +88,28 @@ export default function Answer({ props }) {
         <Star ans={ans} />
 
         {/* COMMENTS BTN*/}
-        <form className="flex items-center" action={() => setIsOpen(!isOpen)}>
-          <button className="hoverAnimate">
-            <FaRegCommentAlt />
-          </button>
-        </form>
+        <button
+          className="hoverAnimate flex items-center"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <FaRegCommentAlt />
+        </button>
 
         {/* EDIT BTN*/}
-        <form className="flex items-center" action={() => setIsEdit(!isEdit)}>
-          <button className="hoverAnimate  text-xl">
-            <CiEdit />
-          </button>
-        </form>
+        <button
+          className="flex items-center hoverAnimate text-xl"
+          onClick={() => setIsEdit(!isEdit)}
+        >
+          <CiEdit />
+        </button>
 
         {/* DELETE BTN*/}
-        <form className="flex items-center" action={() => setIsPopUp(!isPopUp)}>
-          <button className="hoverAnimate text-lg">
-            <AiOutlineDelete />
-          </button>
-        </form>
+        <button
+          className="flex items-center hoverAnimate text-lg"
+          action={() => setIsPopUp(!isPopUp)}
+        >
+          <AiOutlineDelete />
+        </button>
         {isPopUp && (
           <div>
             <div className="fixed top-0 left-0  h-screen w-screen z-20 opacity-50 bg-black "></div>
@@ -122,6 +125,7 @@ export default function Answer({ props }) {
                 >
                   No
                 </button>
+
                 <button
                   className="btn font-semibold rounded bg-[--btn] text-[--text]"
                   onClick={handleDeleteAnswer}
