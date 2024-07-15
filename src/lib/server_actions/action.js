@@ -114,98 +114,98 @@ export const createAnswer = async (prev, formData) => {
   }
 };
 
-// GET ANSWER
-export const getAllAnswers = async (params) => {
-  const qId = params?.id;
-  try {
-    await connectDB();
+// // GET ANSWER
+// export const getAllAnswers = async (params) => {
+//   const qId = params?.id;
+//   try {
+//     await connectDB();
 
-    const res = await Answer.find({ qId }).sort({ star: -1 });
-    // console.log(res);
+//     const res = await Answer.find({ qId }).sort({ star: -1 });
+//     // console.log(res);
 
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     return res;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-// UPDATE STAR
-export const updateStar = async (data) => {
-  const { ansId, star } = data;
-  console.log(data);
-  try {
-    await connectDB();
+// // UPDATE STAR
+// export const updateStar = async (data) => {
+//   const { ansId, star } = data;
+//   console.log(data);
+//   try {
+//     await connectDB();
 
-    if (!star) return { error: "Nothing to update" };
+//     if (!star) return { error: "Nothing to update" };
 
-    const ans = await Answer.findById(ansId);
-    console.log(ans);
+//     const ans = await Answer.findById(ansId);
+//     console.log(ans);
 
-    if (!ans) return { error: "Answer not found" };
+//     if (!ans) return { error: "Answer not found" };
 
-    const newAns = await Answer.findByIdAndUpdate(
-      ansId,
-      {
-        star,
-      },
-      { new: true }
-    );
+//     const newAns = await Answer.findByIdAndUpdate(
+//       ansId,
+//       {
+//         star,
+//       },
+//       { new: true }
+//     );
 
-    console.log(newAns);
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     console.log(newAns);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-// UPDATE ANSWER
-export const updateAns = async (prev, formData) => {
-  const { ansId, newAns, ansImgs } = Object.fromEntries(formData);
+// // UPDATE ANSWER
+// export const updateAns = async (prev, formData) => {
+//   const { ansId, newAns, ansImgs } = Object.fromEntries(formData);
 
-  console.log(ansId, newAns, ansImgs);
+//   console.log(ansId, newAns, ansImgs);
 
-  const ansObj = {
-    ans: newAns,
-  };
-  if (ansImgs) ansObj.imgs = ansImgs.split(",");
+//   const ansObj = {
+//     ans: newAns,
+//   };
+//   if (ansImgs) ansObj.imgs = ansImgs.split(",");
 
-  try {
-    await connectDB();
+//   try {
+//     await connectDB();
 
-    const answer = await Answer.findById(ansId);
-    if (!answer) return { err: "Answer not found" };
+//     const answer = await Answer.findById(ansId);
+//     if (!answer) return { err: "Answer not found" };
 
-    const newAnswer = await Answer.findByIdAndUpdate(ansId, ansObj, {
-      new: true,
-    });
+//     const newAnswer = await Answer.findByIdAndUpdate(ansId, ansObj, {
+//       new: true,
+//     });
 
-    console.log(newAnswer);
+//     console.log(newAnswer);
 
-    revalidatePath(`/questions/${answer._doc.qId}`);
-    return { success: "Question updated successfully" };
-  } catch (error) {
-    console.log(error);
-    return { err: "Error in Server-side. Try again!" };
-  }
-};
+//     revalidatePath(`/questions/${answer._doc.qId}`);
+//     return { success: "Question updated successfully" };
+//   } catch (error) {
+//     console.log(error);
+//     return { err: "Error in Server-side. Try again!" };
+//   }
+// };
 
-// DELETE ANSWER
-export const deleteAnswer = async (ansId) => {
-  console.log(ansId);
-  try {
-    await connectDB();
+// // DELETE ANSWER
+// export const deleteAnswer = async (ansId) => {
+//   console.log(ansId);
+//   try {
+//     await connectDB();
 
-    const answer = await Answer.findById(ansId);
-    const { qId } = answer?._doc;
-    if (!answer) return;
+//     const answer = await Answer.findById(ansId);
+//     const { qId } = answer?._doc;
+//     if (!answer) return;
 
-    await Answer.findByIdAndDelete(ansId);
+//     await Answer.findByIdAndDelete(ansId);
 
-    console.log(`/questions/${qId}`);
-    revalidatePath(`/questions/${qId}`);
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     console.log(`/questions/${qId}`);
+//     revalidatePath(`/questions/${qId}`);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 // ADD COMMENT
 export const addComment = async (formData) => {
@@ -227,23 +227,23 @@ export const addComment = async (formData) => {
   }
 };
 
-// GET ALL COMMENTS
-export const getAllComments = async (ansId) => {
-  console.log(ansId);
-  try {
-    await connectDB();
+// // GET ALL COMMENTS
+// export const getAllComments = async (ansId) => {
+//   console.log(ansId);
+//   try {
+//     await connectDB();
 
-    const cmnts = await Comment.find({ ansId }).sort({ createdAt: -1 });
+//     const cmnts = await Comment.find({ ansId }).sort({ createdAt: -1 });
 
-    if (!cmnts) return false;
+//     if (!cmnts) return false;
 
-    console.log(cmnts);
-    return cmnts;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
-};
+//     console.log(cmnts);
+//     return cmnts;
+//   } catch (error) {
+//     console.log(error);
+//     return false;
+//   }
+// };
 
 // UPDATE COMMENT
 export const updateComment = async ([cmnt, newCmnt]) => {

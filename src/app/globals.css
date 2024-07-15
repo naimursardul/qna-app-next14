@@ -35,6 +35,21 @@
 .globPad {
   @apply px-[100px] max-md:px-[50px] max-sm:px-[25px] py-[80px] max-md:py-[50px];
 }
+.globPadX {
+  @apply px-[100px] max-md:px-[50px] max-sm:px-[25px];
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
 
 .skewBox {
   -webkit-transform: skewX(-10deg);
@@ -57,6 +72,9 @@
 
 .hoverAnimate {
   @apply transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300;
+}
+.hoverAnimateFast {
+  @apply transition ease-in-out delay-150 hover:scale-125;
 }
 
 /* ----------------------------------------------

@@ -3,10 +3,8 @@
 import { useFormStatus } from "react-dom";
 import { IoIosSend } from "react-icons/io";
 
-export default function SubmitBtn() {
+export default function SubmitBtn({ title }) {
   const { pending } = useFormStatus();
-
-  console.log(pending);
 
   return (
     <button
@@ -18,7 +16,7 @@ export default function SubmitBtn() {
         <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-[--text]"></div>
       ) : (
         <div className="flex items-center gap-2">
-          Submit <IoIosSend />
+          {title} <IoIosSend />
         </div>
       )}
     </button>

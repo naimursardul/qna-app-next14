@@ -1,9 +1,9 @@
 "use client";
 
-import { updateStar } from "@/lib/server_actions/action";
+import { updateStar } from "@/lib/server_actions/answer_action";
 import { useState } from "react";
-import { MdOutlineStarOutline } from "react-icons/md";
-import { MdOutlineStarPurple500 } from "react-icons/md";
+import toast from "react-hot-toast";
+import { PiStarFill, PiStarBold } from "react-icons/pi";
 
 export default function Star({ ans }) {
   const [star, setStar] = useState(false);
@@ -21,18 +21,21 @@ export default function Star({ ans }) {
     }
     setVal(newVal);
     const data = { star: newVal, ansId: ans?._id };
-    await updateStar(data);
+    try {
+      await updateStar(data);
+    } catch (error) {
+      toast.error("Error in adding star!");
+    }
   };
 
   return (
     <div className="flex items-center gap-[2px]">
-      <span className="text-md">{val}</span>
-      <button onClick={handleStar} className=" hoverAnimate font-bold text-lg ">
-        {star ? (
-          <MdOutlineStarPurple500 className="text-blue-600" />
-        ) : (
-          <MdOutlineStarOutline />
-        )}
+      <span className="text-[1.1em]">{val}</span>
+      <button
+        onClick={handleStar}
+        className=" hoverAnimateFast font-bold text-[1.1em] "
+      >
+        {star ? <PiStarFill className="text-blue-600" /> : <PiStarBold />}
       </button>
     </div>
   );
