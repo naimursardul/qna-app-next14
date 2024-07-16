@@ -43,29 +43,31 @@ export default function DisplayAnswer({ props }) {
             : "px-4"
         }`}
       >
-        <div
-          className={`flex gap-2  ${
-            !isFullScreen ? "flex-row justify-center " : "flex-col"
-          }`}
-        >
-          {ans?.imgs.length &&
-            ans.imgs.map((img, i) => (
-              <div
-                key={i}
-                className={`relative  ${
-                  !isFullScreen
-                    ? "min-w-[250px] min-h-[300px]"
-                    : "w-full min-h-screen"
-                }`}
-              >
-                <Image
-                  src={img}
-                  alt=""
-                  fill
-                  className={`object-contain bg-[--bgSofter] `}
-                />
-              </div>
-            ))}
+        <div className={`${!isFullScreen && "flex justify-center"}`}>
+          <div
+            className={`flex gap-2 ${
+              !isFullScreen ? "flex-row overflow-x-auto" : "flex-col"
+            }`}
+          >
+            {ans?.imgs.length &&
+              ans.imgs.map((img, i) => (
+                <div
+                  key={i}
+                  className={`relative  ${
+                    !isFullScreen
+                      ? "min-w-[250px] min-h-[300px]"
+                      : "w-full min-h-screen"
+                  }`}
+                >
+                  <Image
+                    src={img}
+                    alt=""
+                    fill
+                    className={`object-contain bg-[--bgSofter] `}
+                  />
+                </div>
+              ))}
+          </div>
         </div>
 
         {/* ANSWER TEXT */}
@@ -97,7 +99,7 @@ export default function DisplayAnswer({ props }) {
                 <div className="fixed top-0 right-0 h-screen w-screen bg-[--bg] opacity-75"></div>
                 <div className=" fixed top-0 right-0 h-full w-full bg-[--bgSoft] overflow-y-auto">
                   <div className="flex flex-col ">
-                    <div className="relative  h-screen w-full">
+                    <div className="relative h-screen w-full">
                       <Image
                         src={ques.imgs[0]}
                         alt=""
