@@ -46,18 +46,21 @@ export default async function page({ params }) {
   // };
 
   return (
-    <div>
-      <div className="globPad">
+    <div className="py-14">
+      <div className="globPadX">
+        <h2 className="w-full text-center text-4xl font-bold text-[--btnSoft] mb-6">
+          Question
+        </h2>
         <SingleQuestion ques={ques} />
       </div>
-      <div className="globPadX">
-        <h2 className="text-2xl font-bold text-[--btnSoft] mb-3">
+      <div className="globPadX pt-20">
+        <h2 className="w-full text-center text-4xl font-bold text-[--btnSoft] mb-12">
           All Answers
         </h2>
-        <div className="flex flex-col gap-4 text-sm">
+        <div className="flex flex-col gap-12 text-sm">
           {answers?.length &&
             answers.map((ans, i) => (
-              <AllAnswer key={i} props={{ ques, ans }} />
+              <AllAnswer key={i} props={{ ques, ans, i }} />
             ))}
         </div>
       </div>

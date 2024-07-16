@@ -13,7 +13,7 @@ import DisplayAnswer from "./DisplayAnswer/DisplayAnswer";
 import { getAllComments } from "@/lib/server_actions/comments_action";
 
 export default function AllAnswer({ props }) {
-  const { ans, ques } = props;
+  const { ans, ques, i } = props;
   const [cmnts, setCmnts] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +56,11 @@ export default function AllAnswer({ props }) {
   };
 
   return (
-    <div className="flex flex-col bg-[--bgSoft] rounded-xl pt-3">
+    <div className="relative flex flex-col bg-[--bgSoft] rounded-xl pt-3">
+      <div className="absolute right-5 -top-[24px] h-[24px] flex items-center bg-[--btn] px-5 text-[1em] text-[--text] font-[600] skewBox">
+        {`Answer ${i + 1}`}
+      </div>
+
       {isEdit && (
         <>
           <div className="z-20 fixed top-0 left-0 h-full w-full bg-[--bg] opacity-65"></div>

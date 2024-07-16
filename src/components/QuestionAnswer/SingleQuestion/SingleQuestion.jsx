@@ -20,54 +20,41 @@ export default function SingleQuestion({ ques }) {
       document.body.classList.remove("overflow-hidden");
     };
   }, [isFullScreen]);
-  return (
-    <div className="flex flex-col gap-10">
-      {/* IMAGE */}
-      {!isFullScreen ? (
-        <div className="mx-auto">
-          {ques?.imgs.length &&
-            ques.imgs.map((img, i) => (
-              <div
-                key={i}
-                className="relative w-[500px] max-sm:w-[280px] h-[500px] max-sm:h-[300px] bg-[--bgSoft] "
-              >
-                <Image src={img} alt="" fill className="object-contain " />
-                <div
-                  className="absolute top-1 right-1 bg-[--bgSofter] text-[--text] p-1 rounded hoverAnimateFast cursor-pointer opacity-50 hover:opacity-100"
-                  onClick={() => setIsFullScreen(!isFullScreen)}
-                >
-                  <BsArrowsFullscreen />
-                </div>
-              </div>
-            ))}
-        </div>
-      ) : (
-        <div className="fixed z-40 top-0 left-0 h-full w-full">
-          {ques?.imgs.length &&
-            ques.imgs.map((img, i) => (
-              <div
-                key={i}
-                className="relative w-full h-full bg-[--bgSoft] border-none "
-              >
-                <Image src={img} alt="" fill className="object-contain " />
-                <div
-                  className="absolute top-2 right-2 bg-[--bg] text-[--text] p-2 hoverAnimateFast cursor-pointer opacity-50 hover:opacity-100"
-                  onClick={() => setIsFullScreen(!isFullScreen)}
-                >
-                  <AiOutlineFullscreen />
-                </div>
-              </div>
-            ))}
-        </div>
-      )}
 
-      {/* OTHERS DETAILS */}
-      <div className="bg-[--bgSoft] w-full flex flex-col gap-4 py-3 px-4">
-        <div className="flex gap-2 justify-between font-bold text-[--text] text-sm">
-          <p>{ques?.sub}</p>
-          <p>{`Chapter: ` + ques?.chap}</p>
+  return (
+    <div className="relative">
+      <div
+        className={`z-[80] bg-[--bgSoft] ${
+          isFullScreen
+            ? "fixed top-0 right-0 h-full w-full overflow-y-auto"
+            : "h-full w-full"
+        }`}
+      >
+        <div className="flex flex-col  pt-6 pb-6">
+          <div
+            className={`relative ${
+              isFullScreen ? "h-screen w-full" : "h-[500px] w-full"
+            }`}
+          >
+            <Image src={ques.imgs[0]} alt="" fill className="object-contain" />
+          </div>
+          <p
+            className={`globPadX ${
+              isFullScreen ? "pt-10 pb-20" : "pt-2"
+            } text-[--text] text-[1em]`}
+          >
+            {ques?.ques}
+          </p>
         </div>
-        <p className="text-[--textSoft]">{ques?.ques}</p>
+      </div>
+
+      <div
+        className={`z-[80] ${
+          isFullScreen ? "fixed top-6 right-8" : "absolute top-4 right-4"
+        } bg-[--bg] text-[--text] text-[1.1em] p-2 hoverAnimateFast cursor-pointer opacity-50 hover:opacity-100`}
+        onClick={() => setIsFullScreen(!isFullScreen)}
+      >
+        {isFullScreen ? <AiOutlineFullscreen /> : <BsArrowsFullscreen />}
       </div>
     </div>
   );

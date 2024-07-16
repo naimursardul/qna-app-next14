@@ -39,7 +39,7 @@ export default function DisplayAnswer({ props }) {
       <div
         className={`bg-[--bgSoft]  ${
           isFullScreen
-            ? "z-40 fixed top-0 left-0 h-full w-full overflow-y-auto"
+            ? "z-[80] fixed top-0 left-0 h-full w-full overflow-y-auto"
             : "px-4"
         }`}
       >
@@ -79,7 +79,7 @@ export default function DisplayAnswer({ props }) {
         <div
           className={`${
             isFullScreen
-              ? "z-30 fixed top-6 right-10"
+              ? "z-[80] fixed top-6 right-10"
               : "absolute top-0 right-3"
           } bg-[--bgSoft] text-[--text] p-1 rounded hoverAnimateFast cursor-pointer opacity-50 hover:opacity-100`}
           onClick={() => setIsFullScreen(!isFullScreen)}
@@ -90,14 +90,14 @@ export default function DisplayAnswer({ props }) {
           <>
             <div
               onClick={() => setSeeQues(!seeQues)}
-              className="z-30 fixed top-16 right-10 text-[--btn] cursor-pointer text-[1.1em] bg-[--bgSoft] p-1 rounded hoverAnimateFast"
+              className="z-[80] fixed top-16 right-10 text-[--btn] cursor-pointer text-[1.1em] bg-[--bgSoft] p-1 rounded hoverAnimateFast"
             >
               {seeQues ? <FaEyeSlash /> : <FaEye />}
             </div>
             {seeQues && (
               <>
-                <div className="fixed top-0 right-0 h-screen w-screen bg-[--bg] opacity-75"></div>
-                <div className=" fixed top-0 right-0 h-full w-full bg-[--bgSoft] overflow-y-auto">
+                {/* <div className="fixed top-0 right-0 h-screen w-screen bg-[--bg] opacity-75"></div> */}
+                <div className="fixed top-0 right-0 h-full w-full bg-[--bgSoft] overflow-y-auto">
                   <div className="flex flex-col ">
                     <div className="relative h-screen w-full">
                       <Image
@@ -108,11 +108,7 @@ export default function DisplayAnswer({ props }) {
                       />
                     </div>
                     <p className="globPadX pt-10 pb-20 text-[--text] text-[1em]">
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                      Quod omnis cumque nisi culpa, perferendis fuga quaerat
-                      adipisci distinctio aspernatur! Facere praesentium nisi
-                      cumque tempore quae eaque repellendus odio asperiores
-                      laboriosam.
+                      {ques?.ques}
                     </p>
                   </div>
                 </div>
